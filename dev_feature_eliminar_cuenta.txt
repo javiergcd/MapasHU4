@@ -16,3 +16,4 @@ feature/eliminar_cuenta change 15 vie 13 mar 2026 15:12:45 -04
 feature/eliminar_cuenta change 16 vie 13 mar 2026 15:12:53 -04
 feature/eliminar_cuenta change 17 vie 13 mar 2026 15:12:58 -04
 feature/eliminar_cuenta change 18 vie 13 mar 2026 15:13:01 -04
+feature/eliminar_cuenta change 19 vie 13 mar 2026 15:13:05 -04
