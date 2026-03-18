@@ -130,4 +130,3 @@ backend/prisma/migrations/README.md
 infra/stress-lab/public/*.txt
 infra/stress-lab/*.txt*.config.ts
 *.config.ts
-.github
