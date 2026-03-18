@@ -4,7 +4,9 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts,tsx}"],
     rules: {
       "no-unused-vars": "warn",
-      "no-undef": "off"
+      "no-undef": "off",
+      "react/display-name": "off",
+      "react/prop-types": "off"
     }
   },
   {
@@ -12,7 +14,9 @@ export default [
       "**/node_modules/**",
       "**/dist/**",
       "**/.next/**",
-      "**/prisma/**"
+      "**/prisma/**",
+      "**/infra/stress-lab/**",
+      "**/scripts/**"
     ]
   }
 ];

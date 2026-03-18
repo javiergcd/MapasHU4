@@ -14,5 +14,10 @@ if (result.error) {
   console.log('✅ .env loaded successfully')
 }
 
-console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'FOUND (starts with ' + process.env.DATABASE_URL.substring(0, 10) + ')' : 'NOT FOUND')
+console.log(
+  'DATABASE_URL:',
+  process.env.DATABASE_URL
+    ? 'FOUND (starts with ' + process.env.DATABASE_URL.substring(0, 10) + ')'
+    : 'NOT FOUND'
+)
 console.log('--- DBG: End ---')
