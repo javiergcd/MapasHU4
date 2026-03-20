@@ -25,5 +25,14 @@
     "time": "Hace un momento",
     "tags": ["#Homepage", "#desarrollo", "#bytemafia"]
   }
+  ,
+  {
+    "id": 2004,
+    "username": "Andres_Dev",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Andresved",
+    "content": "¡Logré integrarme a la rama Bytemafia! 🚀",
+    "time": "Hace un momento",
+    "tags": ["#Bytemafia", "#IS", "#GitFlow"]
+  }
 ]
 
