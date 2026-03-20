@@ -46,7 +46,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json', // 👈 Ruta específica al frontend
+        project: './frontend/tsconfig.json', // 👈 Ruta corregida al frontend
         ecmaVersion: 2022,
         sourceType: 'module',
         ecmaFeatures: {
@@ -69,7 +69,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@next/next/no-html-link-for-pages': ['error', 'frontend/src/app'], // 👈 Ruta específica
+      '@next/next/no-html-link-for-pages': ['error', 'frontend/src/app'],
       '@next/next/no-img-element': 'warn',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
@@ -79,7 +79,7 @@ export default [
         version: 'detect',
       },
       next: {
-        rootDir: 'frontend', // 👈 Directorio raíz de Next.js
+        rootDir: 'frontend',
       },
     },
   },
@@ -90,7 +90,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json', // 👈 Ruta específica al backend
+        project: './backend/tsconfig.json', 
         ecmaVersion: 2022,
         sourceType: 'module',
       },
@@ -105,7 +105,7 @@ export default [
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
-      'no-console': 'off', // Permitir console.log en backend
+      'no-console': 'off',
       'prefer-const': 'error',
     },
   },
@@ -132,4 +132,4 @@ export default [
       'no-undef': 'off',
     },
   },
-] 
+]
