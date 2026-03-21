@@ -82,6 +82,15 @@
     "tags": ["#TeamCebollitas", "#GitPractice", "#DevOps", "#Learning"]
   },
   {
+    "id": 1038,
+    "username": "teamCebollitas_StevenFernandez",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=cebollita",
+    "content": "¡Hola! Soy Steven Fernandez del grupo TeamCebollitas. Estoy aprendiendo Git colaborativo y esta es mi primera contribución 🚀",
+    "image": "https://worldcampus.saintleo.edu/img/article/estudiar-ingenieria-en-sistemas-cuales-son-los-retos-de-ser-ingenierio-en-sistemas.webp" ,
+    "time": "Hace 1 minuto",
+    "tags": ["#TeamCebollitas", "#GitPractice", "#DevOps", "#Learning"]
+  },
+  {
     "id": 1071,
     "username": "Joel_Fernando",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=joel",
@@ -152,8 +161,8 @@
     "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f",
     "time": "Hace 1 minuto",
     "tags": ["#SigmaDevelopers", "#GitPractice", "#DevOps", "#Learning"]
-  },
-  {
+ },
+   {
     "id": 1079,
     "username": "neida_zeballos",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Neida",
@@ -163,7 +172,6 @@
     "tags": ["#SigmaDevelopers", "#GitPractice", "#DevOps", "#Bolivia"]
 },
   {
-      
     "id": 1004,
     "username": "Gustavo_Corrales",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=student1",
@@ -171,8 +179,8 @@
     "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
     "time": "Hace 1 minuto",
     "tags": ["#SigmaDevelopers", "#GitPractice", "#DevOps", "#Learning", "#GitFlow", "#Practice"]
-  },
-{
+ },
+   {
     "id": 1041,
     "username": "JuanDavidGutierrezLucero",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=JuanDavidGutierrezLucero",
@@ -217,7 +225,6 @@
     "time": "Hace 4 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps"]
   },
-
   {
     "id": 1046,
     "username": "JhonAldoFernandezVelasco",
@@ -227,7 +234,6 @@
     "time": "Hace 4 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps"]
   },
-
   {
     "id": 1047,
     "username": "JoelArielLluscoAcho",
@@ -237,7 +243,6 @@
     "time": "Hace 5 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps"]
   },
-
   {
     "id": 1048,
     "username": "AmirAsaithUreñaVidal",
@@ -247,7 +252,6 @@
     "time": "Hace 2 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps"]
   },
-
   {
     "id": 1049,
     "username": "AlexChoqueAjata",
@@ -256,15 +260,6 @@
     "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
     "time": "Hace 30 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps"]
-  },
-{
-  "id": 1050,
-  "username": "NoemiCondoriGaspar",
-  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=NoemiCondori",
-  "content": "¡Hola! Soy Noemí Condori del equipo La Comarca De IS ",
-  "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
-  "time": "Hace 1 minuto",
-  "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps", "#Learning"]
 },
 {
   "id": 1051,
@@ -275,4 +270,4 @@
   "time": "Hace 2 minuto",
   "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps", "#Learning"]
 }
-  ]  
+]
