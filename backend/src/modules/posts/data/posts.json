@@ -241,26 +241,8 @@
     "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
     "time": "Hace 2 minuto",
     "tags": ["#LaComarcaIS", "#GitPractice", "#DevOps", "#Learning"]
-  }
-  ,{
-    "id": 1020,
-    "username": "UnidadLK520(Eliot)",
-    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=UnidadLK520",
-    "content": "Hola no se como llegue aqui asi que saludame por favor ",
-    "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-    "time": "Hace 1 minuto",
-    "tags": ["#Bytemafia", "#GitPractice", "#DevOps", "#Learning"]
-  }
-  ,{
-  "id": 1012,
-  "username": "bytemafia_mireyaRojas",
-  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=bytemafia",
-  "content": "¡Hola desde Bytemafia! Aprendiendo Git colaborativo",
-  "image": "https://images.unsplash.com/photo-1521714161819-15534968fc5f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "time": "Hace 1 minuto",
-  "tags": ["#Bytemafia", "#GitPractice", "#DevOps"]
-  }
-  ,{
+  },
+  {
     "id": 1011,
     "username": "Bellido Zeballos Shawn Brandon",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ByteMafiaDev",
@@ -268,6 +250,24 @@
     "time": "Hace un momento",
     "likes": 0,
     "tags": ["#git", "#desarrollo", "#bytemafia"]
+  },
+  {
+  "id": 1012,
+  "username": "bytemafia_mireyaRojas",
+  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=bytemafia",
+  "content": "¡Hola desde Bytemafia! Aprendiendo Git colaborativo",
+  "image": "https://images.unsplash.com/photo-1521714161819-15534968fc5f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "time": "Hace 1 minuto",
+  "tags": ["#Bytemafia", "#GitPractice", "#DevOps"]
+  },
+  {
+    "id": 1013,
+    "username": "Miguel Angel Massi Geronimo",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Miguel",
+    "content": "Compartiendo mi setup de desarrollo.",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop",
+    "time": "Hace un instante",
+    "tags": ["#setup", "#bytemafia", "#bytemafia"]
   },
   {
     "id": 1014,
@@ -284,15 +284,6 @@
     "content": "Logre ingresar a la rama Bytemafia 🚀",
     "time": "Hace un momento",
     "tags": ["#Bytemafia", "#Dev", "#DevOpsCore"]
-  },
-  {
-    "id": 1013,
-    "username": "Miguel Angel Massi Geronimo",
-    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Miguel",
-    "content": "Compartiendo mi setup de desarrollo.",
-    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop",
-    "time": "Hace un instante",
-    "tags": ["#setup", "#bytemafia", "#bytemafia"]
   },
   {
     "id": 1017,
@@ -321,7 +312,18 @@
     "image": "https://plus.unsplash.com/premium_photo-1663100722417-6e36673fe0ed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "time": "Hace instantes",
     "tags": ["#BF", "#Devs", "#Git"]
-  },
+  }
+  ,
+  {
+    "id": 1020,
+    "username": "UnidadLK520(Eliot)",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=UnidadLK520",
+    "content": "Hola no se como llegue aqui asi que saludame por favor ",
+    "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
+    "time": "Hace 1 minuto",
+    "tags": ["#Bytemafia", "#GitPractice", "#DevOps", "#Learning"]
+  }
+  ,
   {
     "id": 1021,
     "username": "Bytemafia_Adrian.Perez",
