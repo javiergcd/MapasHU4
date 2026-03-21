@@ -93,4 +93,13 @@
     "time": "Hace 1 minuto",
     "tags": ["#Bytemafia", "#SistemasUMSS", "#GitPractice"]
   }
+  {
+    "id": 1019,
+    "username": "Briza_Zurita_Zelada",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Briza",
+    "content": "¡Hola! Soy Briza Zurita Zelada de Bytemafia",
+    "image": "https://plus.unsplash.com/premium_photo-1663100722417-6e36673fe0ed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "time": "Hace instantes",
+    "tags": ["#BF", "#Devs", "#Git"]
+  }
 ]
