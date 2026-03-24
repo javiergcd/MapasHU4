@@ -5,13 +5,14 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import ZoomControls from '@/components/ZoomControls';
+import { createGpsIcon } from '@/components/GpsPin';
 import { useProperties } from '@/hooks/useProperties';
 import { PropertyMapPin } from '@/types/property';
 
 // Fix para los íconos de leaflet en Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
@@ -97,6 +98,11 @@ export default function MapView({
 
         {/* ZoomControls debe estar dentro de MapContainer para usar useMap() */}
         <ZoomControls />
+
+        {/* Pin GPS del usuario */}
+        <Marker position={center} icon={createGpsIcon()}>
+          <Popup>Tu ubicacion actual</Popup>
+        </Marker>
 
         {/* Pins de propiedades */}
         {properties.map((property) => (
