@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@vercel/node": "^5.6.20",
@@ -19,6 +20,9 @@
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.11.20",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^10.1.0",
     "typescript": "^5.3.3"
   }
 }
