@@ -6,50 +6,78 @@ import Link from 'next/link'
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
+
+  const validate = (field: string, value: string) => {
+    let newErrors = { ...errors }
+
+    if (field === 'email') {
+      if (!value) {
+        newErrors.email = 'El correo es obligatorio'
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        newErrors.email = 'Formato de correo inválido'
+      } else {
+        delete newErrors.email
+      }
+    }
+
+    if (field === 'password') {
+      if (!value) {
+        newErrors.password = 'La contraseña es obligatoria'
+      } else {
+        delete newErrors.password
+      }
+    }
+
+    setErrors(newErrors)
+  }
+
   return (
     <div className="w-full max-w-sm rounded-md bg-white p-6 shadow-md">
       <h1 className="mb-4 text-3xl font-bold text-gray-900">Iniciar Sesión</h1>
 
       <form className="space-y-4">
+        {/* EMAIL */}
         <div>
-          <label
-            htmlFor="email"
-            className="mb-1 block text-sm font-medium text-gray-700"
-          >
+          <label className="mb-1 block text-sm font-medium text-gray-700">
             Correo electrónico
           </label>
 
-          <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              ✉
-            </span>
-            <input
-              id="email"
-              type="email"
-              placeholder="Ingresa tu correo electrónico"
-              className="w-full rounded-md border border-gray-300 py-2 pl-9 pr-3 text-sm outline-none transition focus:border-orange-500"
-            />
-          </div>
+          <input
+            type="email"
+            placeholder="Ingresa tu correo electrónico"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value.trim())
+              validate('email', e.target.value.trim())
+            }}
+            className="w-full rounded-md border border-gray-300 py-2 px-3 text-sm outline-none focus:border-orange-500"
+          />
+
+          {errors.email && (
+            <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+          )}
         </div>
 
         <div>
-          <label
-            htmlFor="password"
-            className="mb-1 block text-sm font-medium text-gray-700"
-          >
+          <label className="mb-1 block text-sm font-medium text-gray-700">
             Contraseña
           </label>
 
           <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              🔒
-            </span>
             <input
-              id="password"
               type={showPassword ? 'text' : 'password'}
               placeholder="Ingresa tu contraseña"
-              className="w-full rounded-md border border-gray-300 py-2 pl-9 pr-10 text-sm outline-none transition focus:border-orange-500"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                validate('password', e.target.value)
+              }}
+              className="w-full rounded-md border border-gray-300 py-2 px-3 pr-10 text-sm outline-none focus:border-orange-500"
             />
+
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -58,26 +86,30 @@ export default function LoginForm() {
               {showPassword ? 'Ocultar' : 'Ver'}
             </button>
           </div>
+
+          {errors.password && (
+            <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+          )}
         </div>
 
         <button
           type="submit"
-          className="w-full rounded-md bg-orange-500 py-2 text-sm font-semibold text-white transition hover:bg-orange-600"
+          className="w-full rounded-md bg-orange-500 py-2 text-sm font-semibold text-white hover:bg-orange-600"
         >
           Iniciar sesión
         </button>
 
         <button
           type="button"
-          className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
-          <span className="text-base font-bold text-gray-800">G</span>
+          <span className="text-base font-bold">G</span>
           Continuar con Google
         </button>
 
         <button
           type="button"
-          className="w-full rounded-md bg-gray-700 py-2 text-sm font-medium text-white transition hover:bg-gray-800"
+          className="w-full rounded-md bg-gray-700 py-2 text-sm font-medium text-white hover:bg-gray-800"
         >
           Cancelar Inicio de sesión
         </button>
