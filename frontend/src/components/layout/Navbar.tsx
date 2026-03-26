@@ -2,12 +2,33 @@
 
 import Link from 'next/link'
 import { useNotifications } from '@/hooks/useNotifications'
+import { useEffect } from 'react'
 
 export default function Navbar() {
   const { open, notifications, notificationRef, toggleNotifications } = useNotifications()
+  
+  useEffect(() => {
+
+  const handleKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      if (open) {
+        toggleNotifications()
+      }
+    }
+  }
+
+  document.addEventListener('keydown', handleKey)
+
+  return () => {
+    document.removeEventListener('keydown', handleKey)
+  }
+
+}, [open, toggleNotifications])
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md"
+        role="navigation"
+        aria-label="Menú principal">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-blue-600">
@@ -19,12 +40,15 @@ export default function Navbar() {
               Inicio
             </Link>
 
-            <div className="relative" ref={notificationRef}>
+            <div className="relative" ref={notificationRef}
+                 role="menu" aria-hidden={!open}>
               <button
                 type="button"
                 onClick={toggleNotifications}
                 className="relative rounded-full p-2 transition hover:bg-gray-100"
                 aria-label="Abrir notificaciones"
+                aria-expanded={open}
+                aria-controls="panel-notificaciones"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +67,9 @@ export default function Navbar() {
               </button>
 
               {open && (
-                <div className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
+                <div id="panel-notificaciones"
+                     role="menu"
+                     className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
                   <div className="border-b border-gray-100 px-4 py-3">
                     <h3 className="text-sm font-semibold text-gray-800">Notificaciones</h3>
                   </div>
@@ -57,6 +83,7 @@ export default function Navbar() {
                       notifications.map((notification) => (
                         <div
                           key={notification.id}
+                          role="menuitem"
                           className="cursor-pointer border-b border-gray-100 px-4 py-3 transition hover:bg-gray-50"
                         >
                           <p className="text-sm font-semibold text-gray-800">
