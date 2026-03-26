@@ -9,7 +9,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
-
+  const isFormValid = email !== '' && password !== ''
   const validate = (field: string, value: string) => {
     let newErrors = { ...errors }
 
@@ -97,11 +97,15 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className="w-full rounded-md bg-orange-500 py-2 text-sm font-semibold text-white hover:bg-orange-600"
+          disabled={!isFormValid}
+          className={`w-full rounded-md py-2 text-sm font-semibold text-white ${
+            isFormValid
+            ? 'bg-orange-500 hover:bg-orange-600'
+            : 'bg-orange-300 cursor-not-allowed'
+          }`}
         >
           Iniciar sesión
-        </button>
-
+      </button>
         <button
           type="button"
           className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
