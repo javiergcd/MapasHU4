@@ -46,14 +46,15 @@ export default function LoginForm() {
     e.preventDefault()
 
     const trimmedEmail = email.trim()
+    const trimmedPassword = password.trim()
 
     setEmail(trimmedEmail)
     validate('email', trimmedEmail)
-    validate('password', password)
+    validate('password', trimmedPassword)
 
     console.log('Correo original:', `"${email}"`)
     console.log('Correo sin espacios al inicio/final:', `"${trimmedEmail}"`)
-    console.log('Password:', password)
+    console.log('Password:', trimmedPassword)
 
     // Aquí después puedes enviar al backend usando trimmedEmail
     // login({ email: trimmedEmail, password })
