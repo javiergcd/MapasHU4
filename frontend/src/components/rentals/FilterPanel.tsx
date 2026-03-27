@@ -20,6 +20,31 @@ export default function FilterPanel() {
         </div>
       </div>
 
+    {/* SECCIÓN: Alquileres */}
+      <section className="mt-4">
+        <h3 className="text-xl font-bold text-black mb-3 inline-block border-b-2 border-black pb-0.5">
+          Alquileres
+        </h3>
+      </section>
+
+    <div className="flex flex-col gap-2 mt-2">
+          {/* Fila de ejemplo: Santa Cruz */}
+          <div className="flex justify-between items-center text-lg">
+            <span className="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">Santa Cruz</span>
+            <span className="text-gray-400">5000 casas</span>
+          </div>
+
+          {/* Fila de ejemplo: Cochabamba */}
+          <div className="flex justify-between items-center text-lg">
+            <span className="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">Cochabamba</span>
+            <span className="text-gray-400">2100 casas</span>
+          </div>
+
+          {/* ENLACE VER MÁS */}
+          <button className="text-sm text-orange-400 hover:text-orange-600 font-medium mt-1 w-fit transition-colors">
+            Ver más {'>'}
+          </button>
+        </div>
       </aside>
   );
 }
