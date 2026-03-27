@@ -123,7 +123,9 @@ export default function Navbar() {
                       filteredNotifications.map((notification) => (
                         <div
                           key={notification.id}
-                          className="cursor-pointer border-b border-gray-100 px-4 py-3 transition hover:bg-gray-50"
+                          className={`cursor-pointer border-b border-gray-100 px-4 py-3 transition hover:bg-gray-50 ${
+                            notification.status === 'no leida' ? 'bg-blue-50' : 'bg-white'
+                          }`}
                         >
                           <div className="flex items-center justify-between gap-3">
                             <p className="text-sm font-semibold text-gray-800">
