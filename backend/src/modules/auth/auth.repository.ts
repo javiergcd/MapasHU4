@@ -5,6 +5,7 @@ interface CreateUserInput {
   apellido: string
   correo: string
   password: string
+  rolId: number
   telefono?: string
 }
 
@@ -15,7 +16,7 @@ export const createUser = async (data: CreateUserInput) => {
       apellido: data.apellido,
       correo: data.correo,
       password: data.password,
-      rolId: 2,
+      rolId: data.rolId,
       telefonos: data.telefono
         ? {
             create: {
@@ -37,4 +38,11 @@ export const findUser = async (correo: string) => {
     where: { correo },
   });
 };
+export const findUserByCorreo = async (correo: string) => {
+  return await prisma.usuario.findUnique({
+    where: {
+      correo
+    }
+  })
+}
 
