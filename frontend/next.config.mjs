@@ -9,8 +9,15 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      //pare permitir cargar las imágenes desde Supabase Storage
+      {
+        protocol: 'https',
+        hostname: 'yiwjlbpbziydpkowvfmd.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/**',
+      },
     ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
