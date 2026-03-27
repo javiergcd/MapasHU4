@@ -102,16 +102,18 @@ export default function SignUpForm() {
   }
 
   const isFormValid = useMemo(() => {
-    return formData.email.trim() !== '' && !validateEmail(formData.email)
-  }, [formData.email])
+    return formData.email.trim() 
+    !== '' && !validateEmail(formData.email) && !validatePassword(formData.password)
+  }, [formData.email, formData.password])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const emailError = validateEmail(formData.email)
-
+    const passwordError = validatePassword(formData.password)
     const newErrors: FormErrors = {
-      email: emailError || undefined
+      email: emailError || undefined,
+      password: passwordError || undefined
     }
 
     setErrors(newErrors)
@@ -120,7 +122,7 @@ export default function SignUpForm() {
       email: true
     }))
 
-    if (emailError) return
+    if (emailError || passwordError) return
 
     console.log('Formulario listo para enviar', {
       ...formData,
