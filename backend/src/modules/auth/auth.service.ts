@@ -1,17 +1,22 @@
-import { generateToken } from '../../utils/jwt.js'
-import { findUser } from './auth.repository.js'
+import { generateToken } from "../../utils/jwt.js";
+import { findUser } from "./auth.repository.js";
 
-export const loginService = async ({ email, password }: { email: string; password: string }) => {
+export const loginService = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const user = await findUser(email);
 
-  const user = await findUser(email)
-
-  const trimmedPassword = password.trim()
+  const trimmedPassword = password.trim();
 
   if (!user) {
-    throw new Error('User not found')
+    throw new Error("User not found");
   }
 
-  const token = generateToken(user)
+  const token = generateToken(user);
 
-  return { user, token }
-}
+  return { user, token };
+};
