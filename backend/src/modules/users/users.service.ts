@@ -9,6 +9,21 @@ export const createUserService = async (data: any) => {
   if (!data.name) {
     throw new Error('Name is required')
   }
+    if (!data.password) {
+    throw new Error('Password is required')
+  }
+
+  if (!data.confirmPassword) {
+    throw new Error('Confirm password is required')
+  }
+
+  if (data.password !== data.confirmPassword) {
+    throw new Error('Las contraseñas no coinciden')
+  }
+  
+  const {confirmPassword, ...userData} = data
 
   return createUserRepository(data)
+
+
 }
