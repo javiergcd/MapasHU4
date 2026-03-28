@@ -45,6 +45,9 @@ export default function SignUpForm() {
   const [serverMessage, setServerMessage] = useState('')
   const [serverError, setServerError] = useState('')
 
+  const onlyLettersRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
+  const onlyNumbersRegex = /^[0-9]*$/
+
   const handleChange =
     (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const rawValue = event.target.value
@@ -64,6 +67,42 @@ export default function SignUpForm() {
         }))
       }
 
+      if (field === 'firstName') {
+        setErrors((prev) => ({
+          ...prev,
+          firstName:
+            value.trim() === ''
+              ? 'El campo no puede estar vacío'
+              : onlyLettersRegex.test(value)
+                ? undefined
+                : 'El nombre solo puede contener letras'
+        }))
+      }
+
+      if (field === 'lastName') {
+        setErrors((prev) => ({
+          ...prev,
+          lastName:
+            value.trim() === ''
+              ? 'El campo no puede estar vacío'
+              : onlyLettersRegex.test(value)
+                ? undefined
+                : 'El apellido solo puede contener letras'
+        }))
+      }
+
+      if (field === 'phone') {
+        setErrors((prev) => ({
+          ...prev,
+          phone:
+            value.trim() === ''
+              ? 'El campo no puede estar vacío'
+              : onlyNumbersRegex.test(value)
+                ? undefined
+                : 'El teléfono solo permite números'
+        }))
+      }
+
       if (field === 'password') {
         const passwordError = validatePassword(value)
 
@@ -71,9 +110,11 @@ export default function SignUpForm() {
           ...prev,
           password: passwordError || undefined,
           confirmPassword:
-            formData.confirmPassword && formData.confirmPassword !== value
-              ? 'Las contraseñas no coinciden'
-              : undefined
+            formData.confirmPassword.trim() === ''
+              ? prev.confirmPassword
+              : formData.confirmPassword !== value
+                ? 'Las contraseñas no coinciden'
+                : undefined
         }))
       }
 
@@ -81,46 +122,13 @@ export default function SignUpForm() {
         setErrors((prev) => ({
           ...prev,
           confirmPassword:
-            value !== formData.password
-              ? 'Las contraseñas no coinciden'
-              : undefined
+            value.trim() === ''
+              ? 'El campo no puede estar vacío'
+              : value !== formData.password
+                ? 'Las contraseñas no coinciden'
+                : undefined
         }))
       }
-
-      if (field === 'phone') {
-  const onlyNumbersRegex = /^[0-9]*$/
-
-  setErrors((prev) => ({
-    ...prev,
-    phone:
-      value.trim() === ''
-        ? 'El campo no puede estar vacío'
-        : onlyNumbersRegex.test(value)
-          ? undefined
-          : 'El teléfono solo permite números'
-          
-          
-  }))
-}
-      if (field === 'firstName') {
-        const soloLetrasRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
-        setErrors((prev) => ({
-          ...prev,
-          firstName: value === '' || !soloLetrasRegex.test(value)
-          ? undefined
-          : 'El nombre solo puede contener letras'
-  }))
-}
-
-if (field === 'lastName') {
-  const soloLetrasRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
-  setErrors((prev) => ({
-    ...prev,
-    lastName: value === '' || soloLetrasRegex.test(value)
-      ? undefined
-      : 'El apellido solo puede contener letras'
-  }))
-}
     }
 
   const handleBlur = (field: keyof FormData) => () => {
@@ -138,6 +146,42 @@ if (field === 'lastName') {
       }))
     }
 
+    if (field === 'firstName') {
+      setErrors((prev) => ({
+        ...prev,
+        firstName:
+          formData.firstName.trim() === ''
+            ? 'El campo no puede estar vacío'
+            : onlyLettersRegex.test(formData.firstName)
+              ? undefined
+              : 'El nombre solo puede contener letras'
+      }))
+    }
+
+    if (field === 'lastName') {
+      setErrors((prev) => ({
+        ...prev,
+        lastName:
+          formData.lastName.trim() === ''
+            ? 'El campo no puede estar vacío'
+            : onlyLettersRegex.test(formData.lastName)
+              ? undefined
+              : 'El apellido solo puede contener letras'
+      }))
+    }
+
+    if (field === 'phone') {
+      setErrors((prev) => ({
+        ...prev,
+        phone:
+          formData.phone.trim() === ''
+            ? 'El campo no puede estar vacío'
+            : onlyNumbersRegex.test(formData.phone)
+              ? undefined
+              : 'El teléfono solo permite números'
+      }))
+    }
+
     if (field === 'password') {
       const passwordError = validatePassword(formData.password)
 
@@ -151,57 +195,13 @@ if (field === 'lastName') {
       setErrors((prev) => ({
         ...prev,
         confirmPassword:
-          formData.confirmPassword !== formData.password
-            ? 'Las contraseñas no coinciden'
-            : undefined
+          formData.confirmPassword.trim() === ''
+            ? 'El campo no puede estar vacío'
+            : formData.confirmPassword !== formData.password
+              ? 'Las contraseñas no coinciden'
+              : undefined
       }))
     }
-
-    if (field === 'phone') {
-      const onlyNumbersRegex = /^[0-9]*$/
-
-      setErrors((prev) => ({
-        ...prev,
-        phone: onlyNumbersRegex.test(formData.phone)
-          ? undefined
-          : 'El teléfono solo permite números'
-      }))
-    }
-    if (field === 'firstName') {
-      const soloLetrasRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
-      setErrors((prev) => ({
-      ...prev,
-      firstName: formData.firstName === '' || soloLetrasRegex.test(formData.firstName)
-      ? undefined
-      : 'El nombre solo puede contener letras'
-
-  }))
-}
-
-if (field === 'lastName') {
-  const soloLetrasRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
-  setErrors((prev) => ({
-    ...prev,
-    lastName:
-      formData.lastName === '' || soloLetrasRegex.test(formData.lastName)
-      ? undefined
-      : 'El apellido solo puede contener letras'
-  }))
-}
-
-if (field === 'phone') {
-  const onlyNumbersRegex = /^[0-9]*$/
-
-  setErrors((prev) => ({
-    ...prev,
-    phone:
-      formData.phone.trim() === ''
-        ? 'El campo no puede estar vacío'
-        : onlyNumbersRegex.test(formData.phone)
-          ? undefined
-          : 'El teléfono solo permite números'
-  }))
-}
   }
 
   const handleCancel = () => {
@@ -210,6 +210,8 @@ if (field === 'phone') {
     setTouched({})
     setShowPassword(false)
     setShowConfirmPassword(false)
+    setServerMessage('')
+    setServerError('')
     router.push('/')
   }
 
@@ -226,113 +228,133 @@ if (field === 'phone') {
       requiredFieldsCompleted &&
       !validateEmail(formData.email) &&
       !validatePassword(formData.password) &&
-      formData.confirmPassword === formData.password &&
-      !errors.phone
+      onlyLettersRegex.test(formData.firstName) &&
+      onlyLettersRegex.test(formData.lastName) &&
+      onlyNumbersRegex.test(formData.phone) &&
+      formData.confirmPassword === formData.password
     )
-  }, [formData, errors.phone])
+  }, [formData])
 
- const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault()
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-  setServerMessage('')
-  setServerError('')
+    setServerMessage('')
+    setServerError('')
 
-  const emailError = validateEmail(formData.email)
+    const emailError = validateEmail(formData.email)
 
-  const firstNameError =
-    formData.firstName.trim() === '' ? 'El campo no puede estar vacío' : undefined
+    const firstNameError =
+      formData.firstName.trim() === ''
+        ? 'El campo no puede estar vacío'
+        : onlyLettersRegex.test(formData.firstName)
+          ? undefined
+          : 'El nombre solo puede contener letras'
 
-  const lastNameError =
-    formData.lastName.trim() === '' ? 'El campo no puede estar vacío' : undefined
+    const lastNameError =
+      formData.lastName.trim() === ''
+        ? 'El campo no puede estar vacío'
+        : onlyLettersRegex.test(formData.lastName)
+          ? undefined
+          : 'El apellido solo puede contener letras'
 
-  const passwordError = validatePassword(formData.password)
+    const passwordError = validatePassword(formData.password)
 
-  const confirmPasswordError =
-    formData.confirmPassword.trim() === ''
-      ? 'El campo no puede estar vacío'
-      : formData.confirmPassword !== formData.password
-        ? 'Las contraseñas no coinciden'
-        : undefined
+    const confirmPasswordError =
+      formData.confirmPassword.trim() === ''
+        ? 'El campo no puede estar vacío'
+        : formData.confirmPassword !== formData.password
+          ? 'Las contraseñas no coinciden'
+          : undefined
 
-  const onlyNumbersRegex = /^[0-9]*$/
-  const phoneError =
-    formData.phone.trim() === ''
-      ? 'El campo no puede estar vacío'
-      : onlyNumbersRegex.test(formData.phone)
-        ? undefined
-        : 'El teléfono solo permite números'
+    const phoneError =
+      formData.phone.trim() === ''
+        ? 'El campo no puede estar vacío'
+        : onlyNumbersRegex.test(formData.phone)
+          ? undefined
+          : 'El teléfono solo permite números'
 
-  const newErrors: FormErrors = {
-    email: emailError || undefined,
-    firstName: firstNameError,
-    lastName: lastNameError,
-    phone: phoneError,
-    password: passwordError || undefined,
-    confirmPassword: confirmPasswordError || undefined
-  }
-
-  setErrors(newErrors)
-  setTouched({
-    email: true,
-    firstName: true,
-    lastName: true,
-    phone: true,
-    password: true,
-    confirmPassword: true
-  })
-
-  if (
-    emailError ||
-    firstNameError ||
-    lastNameError ||
-    passwordError ||
-    confirmPasswordError ||
-    phoneError
-  ) {
-    return
-  }
-
-  const payload = {
-    nombre: formData.firstName.trim(),
-    apellido: formData.lastName.trim(),
-    correo: formData.email.trim().toLowerCase(),
-    telefono: formData.phone.trim(),
-    password: formData.password.trim(),
-    confirmPassword: formData.confirmPassword.trim()
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'No se pudo completar el registro')
+    const newErrors: FormErrors = {
+      email: emailError || undefined,
+      firstName: firstNameError,
+      lastName: lastNameError,
+      phone: phoneError,
+      password: passwordError || undefined,
+      confirmPassword: confirmPasswordError || undefined
     }
 
-    setServerMessage(data.message || 'Usuario registrado correctamente')
+    setErrors(newErrors)
+    setTouched({
+      email: true,
+      firstName: true,
+      lastName: true,
+      phone: true,
+      password: true,
+      confirmPassword: true
+    })
 
-    console.log('Registro exitoso:', data)
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : 'No se pudo completar el registro'
+    if (
+      emailError ||
+      firstNameError ||
+      lastNameError ||
+      passwordError ||
+      confirmPasswordError ||
+      phoneError
+    ) {
+      return
+    }
 
-    setServerError(message)
-    console.error('Error al registrar:', error)
+    const payload = {
+      nombre: formData.firstName.trim(),
+      apellido: formData.lastName.trim(),
+      correo: formData.email.trim().toLowerCase(),
+      telefono: formData.phone.trim(),
+      password: formData.password.trim(),
+      confirmPassword: formData.confirmPassword.trim()
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'No se pudo completar el registro')
+      }
+
+      setServerMessage(data.message || 'Usuario registrado correctamente')
+      console.log('Registro exitoso:', data)
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'No se pudo completar el registro'
+
+      setServerError(message)
+      console.error('Error al registrar:', error)
+    }
   }
-}
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-center text-2xl font-bold text-slate-800">
         Registro
       </h2>
+
+      {serverMessage ? (
+        <p className="rounded-md bg-green-100 px-4 py-3 text-sm text-green-700">
+          {serverMessage}
+        </p>
+      ) : null}
+
+      {serverError ? (
+        <p className="rounded-md bg-red-100 px-4 py-3 text-sm text-red-700">
+          {serverError}
+        </p>
+      ) : null}
 
       <div>
         <label
@@ -373,6 +395,7 @@ if (field === 'phone') {
         >
           Nombre
         </label>
+
         <input
           id="firstName"
           name="firstName"
@@ -382,10 +405,20 @@ if (field === 'phone') {
           onBlur={handleBlur('firstName')}
           placeholder="Ingresa tu nombre"
           maxLength={30}
-          className="w-full rounded-md border border-slate-300 px-4 py-3 outline-none focus:border-orange-400"
+          className={`w-full rounded-md border px-4 py-3 outline-none transition ${
+            touched.firstName && errors.firstName
+              ? 'border-red-500'
+              : 'border-slate-300 focus:border-orange-400'
+          }`}
+          aria-invalid={Boolean(touched.firstName && errors.firstName)}
+          aria-describedby="firstName-error"
         />
+
         {touched.firstName && errors.firstName ? (
-          <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>) : null}
+          <p id="firstName-error" className="mt-1 text-sm text-red-600">
+            {errors.firstName}
+          </p>
+        ) : null}
       </div>
 
       <div>
@@ -395,26 +428,31 @@ if (field === 'phone') {
         >
           Apellido
         </label>
+
         <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        value={formData.lastName}
-        onChange={handleChange('lastName')}
-        onBlur={handleBlur('lastName')}
-        placeholder="Ingresa tu apellido"
-        maxLength={30}
-        className={`w-full rounded-md border px-4 py-3 outline-none transition ${
-        touched.lastName && errors.lastName
-        ? 'border-red-500'
-        : 'border-slate-300 focus:border-orange-400'
-        }`}
-        aria-invalid={Boolean(touched.lastName && errors.lastName)}
-        aria-describedby="lastName-error"
-      />
-      {touched.lastName && errors.lastName ? (
-        <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>) : null}
-    </div>
+          id="lastName"
+          name="lastName"
+          type="text"
+          value={formData.lastName}
+          onChange={handleChange('lastName')}
+          onBlur={handleBlur('lastName')}
+          placeholder="Ingresa tu apellido"
+          maxLength={30}
+          className={`w-full rounded-md border px-4 py-3 outline-none transition ${
+            touched.lastName && errors.lastName
+              ? 'border-red-500'
+              : 'border-slate-300 focus:border-orange-400'
+          }`}
+          aria-invalid={Boolean(touched.lastName && errors.lastName)}
+          aria-describedby="lastName-error"
+        />
+
+        {touched.lastName && errors.lastName ? (
+          <p id="lastName-error" className="mt-1 text-sm text-red-600">
+            {errors.lastName}
+          </p>
+        ) : null}
+      </div>
 
       <div>
         <label
@@ -423,28 +461,29 @@ if (field === 'phone') {
         >
           Teléfono
         </label>
-       <input
-       id="phone"
-       name="phone"
-       type="text"
-       value={formData.phone}
-       onChange={handleChange('phone')}
-       onBlur={handleBlur('phone')}
-       placeholder="Ingresa tu teléfono"
-       className={`w-full rounded-md border px-4 py-3 outline-none transition ${
-       touched.phone && errors.phone
-      ? 'border-red-500'
-      : 'border-slate-300 focus:border-orange-400'
-      }`}
-      aria-invalid={Boolean(touched.phone && errors.phone)}
-      aria-describedby="phone-error"
-     />
 
-{touched.phone && errors.phone ? (
-  <p id="phone-error" className="mt-1 text-sm text-red-600">
-    {errors.phone}
-  </p>
-) : null}
+        <input
+          id="phone"
+          name="phone"
+          type="text"
+          value={formData.phone}
+          onChange={handleChange('phone')}
+          onBlur={handleBlur('phone')}
+          placeholder="Ingresa tu teléfono"
+          className={`w-full rounded-md border px-4 py-3 outline-none transition ${
+            touched.phone && errors.phone
+              ? 'border-red-500'
+              : 'border-slate-300 focus:border-orange-400'
+          }`}
+          aria-invalid={Boolean(touched.phone && errors.phone)}
+          aria-describedby="phone-error"
+        />
+
+        {touched.phone && errors.phone ? (
+          <p id="phone-error" className="mt-1 text-sm text-red-600">
+            {errors.phone}
+          </p>
+        ) : null}
       </div>
 
       <div>
@@ -464,7 +503,13 @@ if (field === 'phone') {
             onChange={handleChange('password')}
             onBlur={handleBlur('password')}
             placeholder="Ingresa tu contraseña"
-            className="w-full rounded-md border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-orange-400"
+            className={`w-full rounded-md border px-4 py-3 pr-12 outline-none transition ${
+              touched.password && errors.password
+                ? 'border-red-500'
+                : 'border-slate-300 focus:border-orange-400'
+            }`}
+            aria-invalid={Boolean(touched.password && errors.password)}
+            aria-describedby="password-error"
           />
 
           <button
@@ -480,7 +525,9 @@ if (field === 'phone') {
         </div>
 
         {touched.password && errors.password ? (
-          <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+          <p id="password-error" className="mt-1 text-sm text-red-600">
+            {errors.password}
+          </p>
         ) : null}
       </div>
 
@@ -501,7 +548,15 @@ if (field === 'phone') {
             onChange={handleChange('confirmPassword')}
             onBlur={handleBlur('confirmPassword')}
             placeholder="Confirma tu contraseña"
-            className="w-full rounded-md border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-orange-400"
+            className={`w-full rounded-md border px-4 py-3 pr-12 outline-none transition ${
+              touched.confirmPassword && errors.confirmPassword
+                ? 'border-red-500'
+                : 'border-slate-300 focus:border-orange-400'
+            }`}
+            aria-invalid={Boolean(
+              touched.confirmPassword && errors.confirmPassword
+            )}
+            aria-describedby="confirmPassword-error"
           />
 
           <button
@@ -519,31 +574,37 @@ if (field === 'phone') {
         </div>
 
         {touched.confirmPassword && errors.confirmPassword ? (
-          <p className="mt-1 text-sm text-red-600">
+          <p id="confirmPassword-error" className="mt-1 text-sm text-red-600">
             {errors.confirmPassword}
           </p>
         ) : null}
       </div>
 
-      <button
-        type="submit"
-        disabled={!isFormValid}
-        className="w-full rounded-md bg-orange-400 px-4 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        Registrarse
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="w-1/2 rounded-md border border-slate-300 px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100"
+        >
+          Cancelar registro
+        </button>
 
-      <button
-        type="button"
-        onClick={handleCancel}
-        className="w-full rounded-md bg-slate-700 px-4 py-3 font-semibold text-white"
-      >
-        Cancelar registro
-      </button>
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          className={`w-1/2 rounded-md px-4 py-3 font-semibold text-white transition ${
+            isFormValid
+              ? 'bg-orange-500 hover:bg-orange-600'
+              : 'cursor-not-allowed bg-slate-300'
+          }`}
+        >
+          Registrarse
+        </button>
+      </div>
 
       <p className="text-center text-sm text-slate-600">
         ¿Ya tienes una cuenta?{' '}
-        <Link href="/sign-in" className="font-semibold text-orange-500">
+        <Link href="/sign-in" className="font-medium text-orange-500 hover:underline">
           Inicia sesión
         </Link>
       </p>
