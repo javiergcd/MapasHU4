@@ -58,7 +58,8 @@ export default function Navbar() {
                       Mi perfil
                     </Link>
 
-                    <button onClick={handleLogout} className="w-full bg-red-500 text-white py-1 rounded">
+                    <button onClick={handleLogout} 
+                    className="w-full bg-[#e83017] text-white py-2 rounded-xl font-bold shadow-md hover:opacity-90 transition">
                       Cerrar Sesión
                     </button>
                   </>
