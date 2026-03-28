@@ -79,7 +79,7 @@ export function LocationSearch() {
               key={loc.id}
               type="button"
               onClick={() => { 
-                setQuery(`${loc.nombre}, ${loc.departamento}, Bolivia`);
+                setQuery(`${loc.nombre}, ${loc.departamento}`);
                 setIsOpen(false);
               }}
               className="w-full px-4 py-3 flex items-center gap-3 hover:bg-amber-50 transition-colors text-left border-b border-stone-50 last:border-0"
@@ -88,8 +88,13 @@ export function LocationSearch() {
                 <Search className="w-3.5 h-3.5 text-stone-500" />
               </div>
               <div>
-                <span className="block text-sm font-bold text-stone-900 font-inter">
-                  {loc.nombre}, {loc.departamento}, Bolivia
+                <span className="block text-sm font-bold text-stone-500 font-inter">
+                  {loc.nombre}, {loc.departamento}
+                  <img
+                  src="https://flagcdn.com/w20/bo.png"
+                  alt="Bolivia"
+                  className="inline ml-2 w-4 h-4"
+                  />
                 </span>
               </div>
             </button>
