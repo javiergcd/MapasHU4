@@ -1,41 +1,41 @@
-"use client";
+'use client'
 import { useEffect } from 'react'
 import { mockNotifications } from '@/data/mockNotifications'
 
 export default function NotificationsPage() {
-   useEffect(() => {
+  useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        alert('Cerrar notificaciones (simulado)');
+        alert('Cerrar notificaciones (simulado)')
       }
-    };
+    }
 
-    document.addEventListener('keydown', handleEsc);
+    document.addEventListener('keydown', handleEsc)
 
     return () => {
-      document.removeEventListener('keydown', handleEsc);
-    };
-  }, []);
-  
-  return ( 
+      document.removeEventListener('keydown', handleEsc)
+    }
+  }, [])
+
+  return (
     <section className="mx-auto max-w-3xl">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Todas las notificaciones</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Notificaciones del usuario.
-        </p>
+        <p className="mt-1 text-sm text-gray-500">Notificaciones del usuario.</p>
       </div>
 
-      <div 
-           role="list"
-           aria-label="Lista de notificaciones"
-           aria-live="polite"
-           className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div
+        role="list"
+        aria-label="Lista de notificaciones"
+        aria-live="polite"
+        className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+      >
         {mockNotifications.length === 0 ? (
-          <p 
+          <p
             role="status"
             aria-live="polite"
-            className="px-4 py-6 text-center text-sm text-gray-500">
+            className="px-4 py-6 text-center text-sm text-gray-500"
+          >
             No hay notificaciones
           </p>
         ) : (

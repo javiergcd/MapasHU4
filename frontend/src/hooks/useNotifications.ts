@@ -15,6 +15,7 @@ export function useNotifications() {
 
   const [notifications, setNotifications] = useState<NotificationItem[]>(mockNotifications)
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const toggleNotifications = () => {
     setOpen((prev) => !prev)
@@ -75,6 +76,8 @@ export function useNotifications() {
     setFilter,
     markAsRead,
     archiveNotification,
-    loadMoreNotifications
+    loadMoreNotifications,
+    isLoggedIn,
+    setIsLoggedIn
   }
 }

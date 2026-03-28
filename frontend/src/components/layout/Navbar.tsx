@@ -15,7 +15,9 @@ export default function Navbar() {
     setFilter,
     markAsRead,
     archiveNotification,
-    loadMoreNotifications
+    loadMoreNotifications,
+    isLoggedIn,
+    setIsLoggedIn
   } = useNotifications()
 
   const unreadCount = notifications.filter((n) => n.status === 'no leida').length
@@ -67,135 +69,146 @@ export default function Navbar() {
                   <div className="border-b border-gray-100 px-4 py-3">
                     <h3 className="text-sm font-semibold text-gray-800">Notificaciones</h3>
                   </div>
-
-                  <div className="flex flex-wrap gap-2 border-b border-gray-100 px-4 py-3">
-                    <button
-                      type="button"
-                      onClick={() => setFilter('todas')}
-                      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                        filter === 'todas'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      Todas
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setFilter('leida')}
-                      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                        filter === 'leida'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      Leídas
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setFilter('no leida')}
-                      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                        filter === 'no leida'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      No leídas
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setFilter('archivada')}
-                      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                        filter === 'archivada'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      Archivadas
-                    </button>
-                  </div>
-
-                  <div
-                    className="max-h-80 overflow-y-auto"
-                    onScroll={(e) => {
-                      const target = e.currentTarget
-                      const reachedBottom =
-                        target.scrollTop + target.clientHeight >= target.scrollHeight - 10
-
-                      if (reachedBottom) {
-                        loadMoreNotifications()
-                      }
-                    }}
-                  >
-                    {filteredNotifications.length === 0 ? (
-                      <p className="px-4 py-6 text-center text-sm text-gray-500">
-                        No hay notificaciones
+                  {!isLoggedIn ? (
+                    <div className="px-4 py-6 text-center">
+                      <p className="text-sm text-gray-500">
+                        Regístrate o inicia sesión para recibir notificaciones
                       </p>
-                    ) : (
-                      <>
-                        {visibleNotifications.map((notification) => (
-                          <div
-                            key={notification.id}
-                            onClick={() => {
-                              if (notification.status !== 'archivada') {
-                                markAsRead(notification.id)
-                              }
-                            }}
-                            className={`cursor-pointer border-b border-gray-100 px-4 py-3 transition hover:bg-gray-50 ${
-                              notification.status === 'no leida' ? 'bg-blue-50' : 'bg-white'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between gap-3">
-                              <p className="text-sm font-semibold text-gray-800">
-                                {notification.title}
-                              </p>
+                      <div className="mt-3 flex justify-center">
+                        <button
+                          type="button"
+                          onClick={() => setIsLoggedIn(true)}
+                          className="rounded-full bg-blue-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-blue-700"
+                        >
+                          Iniciar sesión
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-wrap gap-2 border-b border-gray-100 px-4 py-3">
+                        <button
+                          type="button"
+                          onClick={() => setFilter('todas')}
+                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                            filter === 'todas'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          Todas
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setFilter('leida')}
+                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                            filter === 'leida'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          Leídas
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setFilter('no leida')}
+                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                            filter === 'no leida'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          No leídas
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setFilter('archivada')}
+                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                            filter === 'archivada'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          Archivadas
+                        </button>
+                      </div>
 
-                              <span className="text-[10px] uppercase text-gray-400">
-                                {notification.status}
-                              </span>
-                            </div>
-
-                            <p className="mt-1 text-sm text-gray-600">
-                              {notification.description}
-                            </p>
-
-                            {notification.status !== 'archivada' && (
-                              <div className="mt-2 flex justify-end">
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation()
-                                    archiveNotification(notification.id)
-                                  }}
-                                  className="text-xs text-gray-400 transition hover:text-gray-600"
-                                >
-                                  Archivar
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-
-                        {visibleNotifications.length < filteredNotifications.length && (
-                          <p className="px-4 py-3 text-center text-xs text-gray-400">
-                            Cargando más notificaciones...
+                      <div
+                        className="max-h-80 overflow-y-auto"
+                        onScroll={(e) => {
+                          const target = e.currentTarget
+                          const reachedBottom =
+                            target.scrollTop + target.clientHeight >= target.scrollHeight - 10
+                          if (reachedBottom) {
+                            loadMoreNotifications()
+                          }
+                        }}
+                      >
+                        {filteredNotifications.length === 0 ? (
+                          <p className="px-4 py-6 text-center text-sm text-gray-500">
+                            No hay notificaciones
                           </p>
-                        )}
-                      </>
-                    )}
-                  </div>
+                        ) : (
+                          <>
+                            {visibleNotifications.map((notification) => (
+                              <div
+                                key={notification.id}
+                                onClick={() => {
+                                  if (notification.status !== 'archivada') {
+                                    markAsRead(notification.id)
+                                  }
+                                }}
+                                className={`cursor-pointer border-b border-gray-100 px-4 py-3 transition hover:bg-gray-50 ${
+                                  notification.status === 'no leida' ? 'bg-blue-50' : 'bg-white'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-3">
+                                  <p className="text-sm font-semibold text-gray-800">
+                                    {notification.title}
+                                  </p>
+                                  <span className="text-[10px] uppercase text-gray-400">
+                                    {notification.status}
+                                  </span>
+                                </div>
+                                <p className="mt-1 text-sm text-gray-600">
+                                  {notification.description}
+                                </p>
+                                {notification.status !== 'archivada' && (
+                                  <div className="mt-2 flex justify-end">
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        archiveNotification(notification.id)
+                                      }}
+                                      className="text-xs text-gray-400 transition hover:text-gray-600"
+                                    >
+                                      Archivar
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
 
-                  <div className="border-t border-gray-100 px-4 py-3 text-center">
-                    <Link
-                      href="/notificaciones"
-                      className="text-sm font-medium text-blue-600 transition hover:text-blue-700"
-                    >
-                      Ver todo
-                    </Link>
-                  </div>
+                            {visibleNotifications.length < filteredNotifications.length && (
+                              <p className="px-4 py-3 text-center text-xs text-gray-400">
+                                Cargando más notificaciones...
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
+
+                      <div className="border-t border-gray-100 px-4 py-3 text-center">
+                        <Link
+                          href="/notificaciones"
+                          className="text-sm font-medium text-blue-600 transition hover:text-blue-700"
+                        >
+                          Ver todo
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
