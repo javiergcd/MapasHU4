@@ -315,20 +315,27 @@ export default function SignUpForm() {
     try {
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
+         headers: {
+         'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(payload)
+         })
 
-      const data = await response.json()
+let data: any = null
 
-      if (!response.ok) {
-        throw new Error(data.message || 'No se pudo completar el registro')
-      }
+try {
+  data = await response.json()
+} catch {
+  data = null
+}
 
-      setServerMessage(data.message || 'Usuario registrado correctamente')
-      console.log('Registro exitoso:', data)
+if (!response.ok) {
+  throw new Error(data?.message || 'No se pudo completar el registro')
+}
+
+setServerMessage(data?.message || 'Usuario registrado correctamente')
+console.log('Registro exitoso:', data)
+
     } catch (error) {
       const message =
         error instanceof Error ? error.message : 'No se pudo completar el registro'
