@@ -1,3 +1,4 @@
+"use client";
 type Props = {
   selected: string;
   onChange: (modo: "venta" | "alquiler" | "anticretico") => void;

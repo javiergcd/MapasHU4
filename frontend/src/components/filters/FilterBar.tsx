@@ -1,3 +1,4 @@
+"use client";
 import { useFilters } from "@/hooks/useFilters";
 import PropertyTypeFilter from "./PropertyTypeFilter";
 import TransactionModeFilter from "./TransactionModeFilter";
