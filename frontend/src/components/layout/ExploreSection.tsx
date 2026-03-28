@@ -11,7 +11,7 @@ const searchOptions = [
 ];
 
 export default function ExploreSection() {
-  const [selectedOption, setSelectedOption] = useState<string>("venta");
+  const [selectedOption, setSelectedOption] = useState<string[]>([]); {/* Ninguno seleccionado por defecto y multiple */}
 
   const propertyTypes = ["Casas", "Departamentos", "Cuartos", "Terrenos", "Espacios Cementerio"];
 
@@ -24,20 +24,27 @@ export default function ExploreSection() {
           {/* Fila de Venta, Alquiler, Anticrético*/}
           <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
             {searchOptions.map((option) => {
-              const isSelected = selectedOption === option.id;
+              const isSelected = selectedOption.includes(option.id);
               return (
                 <button
                   key={option.id}
-                  onClick={() => setSelectedOption(option.id)}
+                  onClick={() => setSelectedOption((prev) =>
+                  prev.includes(option.id)
+                  ? prev.filter((item) => item !== option.id)
+                  : [...prev, option.id]
+                )}
                   className="flex items-center gap-2.5 transition-colors duration-200 group focus:outline-none"
                 >
-                  <Square 
-                    className={`w-5 h-5 transition-colors ${
+                  {/* Filtros de operación: venta, alquiler y anticrético */}
+                  <div
+                    className={`w-7 h-7 rounded-md border shadow-sm flex items-center justify-center transition-all ${
                       isSelected 
-                        ? 'text-amber-600 fill-amber-50' 
-                        : 'text-stone-300 group-hover:text-amber-400'
+                        ? "bg-amber-500 border-amber-500"
+                        : "bg-white border-stone-300"
                     }`} 
-                  />
+                  > 
+                    {isSelected && <span className="text-white text-sm font-bold">✓</span>}
+                  </div>
                   <span className={`font-semibold font-montserrat text-lg transition-colors ${
                     isSelected
                       ? 'text-amber-700' 
