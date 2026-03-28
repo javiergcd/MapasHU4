@@ -8,7 +8,7 @@ import { Search, MapPin, DollarSign, Home, Building, Square } from 'lucide-react
 import HeaderPanel from '@/components/galeria/HeaderPanel';
 
 // MAPA: Importado desde la ubicación oficial
-const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
+const MapView = dynamic(() => import('./MapView'), { ssr: false });
 
 export default function BusquedaMapaPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
