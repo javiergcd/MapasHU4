@@ -13,6 +13,20 @@ const DUMMY_RENTALS = [
   { name: 'Oruro', count: 500 },
 ];
 
+const DUMMY_SALES = [
+  { name: 'Santa Cruz', count: 8000 },
+  { name: 'Cochabamba', count: 4200 },
+  { name: 'La Paz', count: 1500 },
+  { name: 'Tarija', count: 900 },
+];
+
+const DUMMY_TYPES = [
+  { name: 'Casas', count: 12000 },
+  { name: 'Departamentos', count: 8500 },
+  { name: 'Terrenos', count: 3000 },
+  { name: 'Oficinas', count: 1200 },
+];
+
 export default function FilterPanel() {
   // 1. Usamos el Hook pasando los datos iniciales
   const { 
@@ -23,8 +37,10 @@ export default function FilterPanel() {
     viewLevel 
   } = useFilterLogic(DUMMY_RENTALS);
 
-  // 2. Obtenemos solo los datos que deben ser visibles
+  // 2. Obtenemos solo los datos que deben ser visibles para cada sección
   const visibleRentals = getVisibleData(DUMMY_RENTALS);
+  const visibleSales = getVisibleData(DUMMY_SALES);
+  const visibleTypes = getVisibleData(DUMMY_TYPES);
 
   return (
     <aside className="w-full md:w-80 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
@@ -55,7 +71,6 @@ export default function FilterPanel() {
         </h3>
         
         <div className="flex flex-col gap-2 mt-2">
-          {/* 3. Renderizado Dinámico con .map() */}
           {visibleRentals.map((city, index) => (
             <div key={index} className="flex justify-between items-center text-lg">
               <span className="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">
@@ -65,8 +80,6 @@ export default function FilterPanel() {
             </div>
           ))}
 
-          {/* 4. BOTÓN VER MÁS (Conectado a handleSeeMore) */}
-          {/* Solo se muestra si no estamos en el nivel máximo de visualización */}
           {viewLevel < 3 && (
             <button 
               onClick={handleSeeMore}
@@ -77,6 +90,61 @@ export default function FilterPanel() {
           )}
         </div>
       </section>
+
+      {/* SECCIÓN: En venta */}
+      <section className="mt-8">
+        <h3 className="text-xl font-bold text-black mb-3 inline-block border-b-2 border-black pb-0.5">
+          En venta
+        </h3>
+        
+        <div className="flex flex-col gap-2 mt-2">
+          {visibleSales.map((city, index) => (
+            <div key={index} className="flex justify-between items-center text-lg">
+              <span className="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">
+                {city.name}
+              </span>
+              <span className="text-gray-400">{city.count} casas</span>
+            </div>
+          ))}
+
+          {viewLevel < 3 && visibleSales.length < DUMMY_SALES.length && (
+            <button 
+              onClick={handleSeeMore}
+              className="text-sm text-orange-400 hover:text-orange-600 font-medium mt-1 w-fit transition-colors underline"
+            >
+              Ver más {'>'}
+            </button>
+          )}
+        </div>
+      </section>
+
+      {/* SECCIÓN: Por tipo de inmueble */}
+      <section className="mt-8">
+        <h3 className="text-xl font-bold text-black mb-3 inline-block border-b-2 border-black pb-0.5">
+          Por tipo de inmueble
+        </h3>
+        
+        <div className="flex flex-col gap-2 mt-2">
+          {visibleTypes.map((type, index) => (
+            <div key={index} className="flex justify-between items-center text-lg">
+              <span className="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">
+                {type.name}
+              </span>
+              <span className="text-gray-400">{type.count} propiedades</span>
+            </div>
+          ))}
+
+          {viewLevel < 3 && visibleTypes.length < DUMMY_TYPES.length && (
+            <button 
+              onClick={handleSeeMore}
+              className="text-sm text-orange-400 hover:text-orange-600 font-medium mt-1 w-fit transition-colors underline"
+            >
+              Ver más {'>'}
+            </button>
+          )}
+        </div>
+      </section>
+    
     </aside>
   );
 }
