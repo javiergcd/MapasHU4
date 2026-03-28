@@ -6,7 +6,7 @@ const HeaderPanel: React.FC = () => {
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
 
   return (
-    /* Manteniendo tu ajuste de gap-40 para corregir el exceso de 0.5mm */
+    /* Manteniendo tu ajuste de gap-20 para corregir el exceso de 0.5mm */
     <div className="w-full py-4 flex items-center gap-20 bg-transparent border-b border-gray-50 mb-2">
       
       <div className="shrink-0">

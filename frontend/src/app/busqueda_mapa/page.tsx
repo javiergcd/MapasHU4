@@ -6,12 +6,15 @@ import { Search, MapPin, DollarSign, Home, Building, Square } from 'lucide-react
 
 // TU COMPONENTE: Importado en la nueva estructura
 import HeaderPanel from '@/components/galeria/HeaderPanel';
+import PropertyRow from '@/components/galeria/PropertyRow';
+
 
 // MAPA: Importado desde la ubicación oficial
 const MapView = dynamic(() => import('./MapView'), { ssr: false });
 
 export default function BusquedaMapaPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [data, setData] = useState<any[]>([]);
 
   return (
     <div className="flex flex-col w-full min-h-[calc(100vh-theme(spacing.32))] border rounded-lg overflow-hidden shadow-sm bg-white">
@@ -72,7 +75,7 @@ export default function BusquedaMapaPage() {
             }
           `}
         >
-          <div className={`p-4 h-full overflow-y-auto md:w-[30vw] min-w-[250px]`}>
+          <div className="p-4 h-full overflow-y-auto w-full md:max-w-[380px]">
             <div className="flex items-center gap-2 mb-4">
               <button 
                 onClick={() => setIsSidebarOpen(false)} 
@@ -87,13 +90,57 @@ export default function BusquedaMapaPage() {
             <div className="mb-4">
                <HeaderPanel />
             </div>
-            
-            <div className="space-y-4">
-              <div className="h-28 bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
-                <p className="text-xs text-gray-400 mb-2">Vista previa de resultados</p>
-                <div className="h-4 bg-gray-200 w-3/4 mb-3 rounded"></div>
-                <div className="h-4 bg-gray-200 w-1/2 rounded"></div>
+            {/* VISTA PREVIA DE RESULTADOS (T6 - Formato Tabla de 4 columnas) */}
+            <div className="mt-6 border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+              
+              {/* HEADER TABLA */}
+              <div className="grid grid-cols-[40px_70px_minmax(0,1fr)_50px] gap-2 bg-gray-50/70 px-3 py-2 border-b items-center">
+                <span className="text-[9px] font-bold text-gray-500 text-left">Foto</span>
+                <span className="text-[9px] font-bold text-gray-500 text-left">Precio</span>
+                <span className="text-[9px] font-bold text-gray-500 text-left">Detalle / m²</span>
+                <span className="text-[9px] font-bold text-gray-500 text-center">Contacto</span>
               </div>
+
+                {/* FILAS */}
+                <div className="divide-y divide-gray-50">
+                  {data.length > 0 ? (
+                    data.map((item, index) => (
+                      <PropertyRow
+                        key={index}
+                        title={item.title}
+                        price={item.price}
+                        size={item.size}
+                        contactType={item.contactType}
+                        image={item.image}
+                      />
+                    ))
+                  ) : (
+                    <>
+                  <PropertyRow 
+                    title="Casa Obra Gruesa..." 
+                    price="$us 189K" 
+                    size="272 m²" 
+                    contactType="whatsapp"
+                    image="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
+                  />
+                  <PropertyRow 
+                    title="Depto Minimalista..." 
+                    price="Bs 950K" 
+                    size="110 m²" 
+                    contactType="messenger"
+                    image="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+                  />
+                  <PropertyRow 
+                    title="Terreno Comercial" 
+                    price="$us 85K" 
+                    size="500 m²" 
+                    contactType="whatsapp"
+                    image="https://images.unsplash.com/photo-1500382017468-9049fed747ef"
+                  />
+                </>
+              )}
+              </div>
+              
             </div>
           </div>
         </aside>
