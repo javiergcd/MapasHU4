@@ -50,12 +50,16 @@ export default function NotificationsPage() {
               }`}
             >
               <div className="flex items-center justify-between gap-3">
-                <h2 className="text-sm font-semibold text-gray-800">{notification.title}</h2>
+                <h2 className="text-sm font-semibold text-gray-800">
+                  {notification.title?.trim() || '(Sin título)'}
+                </h2>
 
                 <span className="text-[10px] uppercase text-gray-400">{notification.status}</span>
               </div>
 
-              <p className="mt-1 text-sm text-gray-600">{notification.description}</p>
+              <p className="mt-1 text-sm text-gray-600">
+                {notification.description?.trim() || '(Sin descripción disponible)'}
+              </p>
             </div>
           ))
         )}

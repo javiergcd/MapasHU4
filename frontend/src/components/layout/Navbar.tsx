@@ -164,14 +164,15 @@ export default function Navbar() {
                               >
                                 <div className="flex items-center justify-between gap-3">
                                   <p className="text-sm font-semibold text-gray-800">
-                                    {notification.title}
+                                    {notification.title?.trim() || '(Sin título)'}
                                   </p>
                                   <span className="text-[10px] uppercase text-gray-400">
                                     {notification.status}
                                   </span>
                                 </div>
                                 <p className="mt-1 text-sm text-gray-600">
-                                  {notification.description}
+                                  {notification.description?.trim() ||
+                                    '(Sin descripción disponible)'}
                                 </p>
                                 {notification.status !== 'archivada' && (
                                   <div className="mt-2 flex justify-end">
