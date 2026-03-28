@@ -32,7 +32,10 @@ export default function NotificationsPage() {
            aria-live="polite"
            className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         {mockNotifications.length === 0 ? (
-          <p className="px-4 py-6 text-center text-sm text-gray-500">
+          <p 
+            role="status"
+            aria-live="polite"
+            className="px-4 py-6 text-center text-sm text-gray-500">
             No hay notificaciones
           </p>
         ) : (
