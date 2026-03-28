@@ -78,15 +78,19 @@ export function LocationSearch() {
             <button
               key={loc.id}
               type="button"
-              onClick={() => { setQuery(loc.nombre); setIsOpen(false); }}
+              onClick={() => { 
+                setQuery(`${loc.nombre}, ${loc.departamento}, Bolivia`);
+                setIsOpen(false);
+              }}
               className="w-full px-4 py-3 flex items-center gap-3 hover:bg-amber-50 transition-colors text-left border-b border-stone-50 last:border-0"
             >
               <div className="bg-stone-100 p-1.5 rounded-lg">
                 <Search className="w-3.5 h-3.5 text-stone-500" />
               </div>
               <div>
-                <span className="block text-sm font-bold text-stone-900 font-inter">{loc.nombre}</span>
-                <span className="block text-[10px] text-stone-500 uppercase">{loc.departamento}</span>
+                <span className="block text-sm font-bold text-stone-900 font-inter">
+                  {loc.nombre}, {loc.departamento}, Bolivia
+                </span>
               </div>
             </button>
           ))}
