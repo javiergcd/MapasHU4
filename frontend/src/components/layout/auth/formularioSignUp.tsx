@@ -533,10 +533,10 @@ export default function SignUpForm() {
                   onBlur={handleBlur('password')}
                   placeholder="Ingresa tu contraseña"
                   maxLength={255}
-                  className={getInputClasses(
+                  className={`${getInputClasses(
                     Boolean(touched.password && errors.password),
                     true
-                  )}
+                  )} hide-native-password-toggle`}
                   aria-invalid={Boolean(touched.password && errors.password)}
                   aria-describedby="password-error"
                 />
@@ -572,10 +572,10 @@ export default function SignUpForm() {
                   onBlur={handleBlur('confirmPassword')}
                   placeholder="Ingresa tu contraseña"
                   maxLength={255}
-                  className={getInputClasses(
+                  className={`${getInputClasses(
                     Boolean(touched.confirmPassword && errors.confirmPassword),
                     true
-                  )}
+                  )} hide-native-password-toggle`}
                   aria-invalid={Boolean(
                     touched.confirmPassword && errors.confirmPassword
                   )}
