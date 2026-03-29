@@ -15,6 +15,20 @@ const nextConfig = {
         port: '',
         pathname: '/storage/v1/object/**',
       },
+      // para permitir imágenes externas de banderas
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
+        port: '',
+        pathname: '/**',
+      },
+      // para permitir imágenes de Unsplash
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
