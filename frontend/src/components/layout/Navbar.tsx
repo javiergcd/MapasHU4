@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import Link from 'next/link'
 import { useNotifications } from '@/hooks/useNotifications'
@@ -217,5 +217,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
