@@ -1,39 +1,35 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 import { mockNotifications } from '@/data/mockNotifications'
 
 export default function NotificationsPage() {
-  const router = useRouter();
-  const [notifications, setNotifications] = useState(mockNotifications);
-  
+  const router = useRouter()
+  const [notifications, setNotifications] = useState(mockNotifications)
+
   const handleDelete = (id: number) => {
-  const updated = notifications.filter((n) => n.id !== id);
-   setNotifications(updated);
-  };
+    const updated = notifications.filter((n) => n.id !== id)
+    setNotifications(updated)
+  }
   const markAllAsRead = () => {
     setNotifications((prev) =>
-      prev.map((n) =>
-        n.status === "no leida" 
-          ? { ...n, status: "leida" }
-          : n
-      )
-    );
-  };
-  
+      prev.map((n) => (n.status === 'no leida' ? { ...n, status: 'leida' } : n))
+    )
+  }
+
   useEffect(() => {
-  const handleEsc = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      router.back();
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        router.back()
+      }
     }
-  };
 
-  window.addEventListener("keydown", handleEsc);
+    window.addEventListener('keydown', handleEsc)
 
-  return () => {
-    window.removeEventListener("keydown", handleEsc);
-  };
-}, [router]);
+    return () => {
+      window.removeEventListener('keydown', handleEsc)
+    }
+  }, [router])
 
   return (
     <section className="mx-auto max-w-3xl">
@@ -45,7 +41,6 @@ export default function NotificationsPage() {
         >
           Marcar todas como leídas
         </button>
-        <p className="mt-1 text-sm text-gray-500">Notificaciones del usuario.</p>
       </div>
 
       <div
@@ -77,25 +72,36 @@ export default function NotificationsPage() {
                 <h2 className="text-sm font-semibold text-gray-800">
                   {notification.title?.trim() || '(Sin título)'}
                 </h2>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase text-gray-400">
-                    {notification.status}
-                  </span>
-
-                  <button
-                    onClick={() => handleDelete(notification.id)}
-                    className="text-red-500 text-xs hover:underline"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-
                 <span className="text-[10px] uppercase text-gray-400">{notification.status}</span>
               </div>
-
               <p className="mt-1 text-sm text-gray-600">
                 {notification.description?.trim() || '(Sin descripción disponible)'}
               </p>
+
+              <div className="mt-2 flex items-center justify-between">
+                {notification.status !== 'archivada' ? (
+                  <button
+                    onClick={() =>
+                      setNotifications((prev) =>
+                        prev.map((n) =>
+                          n.id === notification.id ? { ...n, status: 'archivada' } : n
+                        )
+                      )
+                    }
+                    className="text-xs text-amber-500 transition hover:text-amber-600 hover:underline"
+                  >
+                    Archivar
+                  </button>
+                ) : (
+                  <span />
+                )}
+                <button
+                  onClick={() => handleDelete(notification.id)}
+                  className="text-xs text-red-500 transition hover:text-red-600 hover:underline"
+                >
+                  Eliminar
+                </button>
+              </div>
             </div>
           ))
         )}
