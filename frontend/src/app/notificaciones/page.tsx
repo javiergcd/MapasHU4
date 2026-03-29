@@ -1,21 +1,24 @@
 'use client'
 import { useEffect } from 'react'
+import { useRouter } from "next/navigation";
 import { mockNotifications } from '@/data/mockNotifications'
 
 export default function NotificationsPage() {
-  useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        alert('Cerrar notificaciones (simulado)')
-      }
-    }
+  const router = useRouter();
 
-    document.addEventListener('keydown', handleEsc)
-
-    return () => {
-      document.removeEventListener('keydown', handleEsc)
+useEffect(() => {
+  const handleEsc = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      router.back();
     }
-  }, [])
+  };
+
+  window.addEventListener("keydown", handleEsc);
+
+  return () => {
+    window.removeEventListener("keydown", handleEsc);
+  };
+}, [router]);
 
   return (
     <section className="mx-auto max-w-3xl">
