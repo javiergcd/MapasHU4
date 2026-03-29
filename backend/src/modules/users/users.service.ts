@@ -12,6 +12,7 @@ export const getUsersService = async () => {
 };
 
 export const createUserService = async (data: payload) => {
+  // 🔥 lógica de negocio (validaciones, reglas, etc.)
   if (!data.name) {
     throw new Error("Name is required");
   }
