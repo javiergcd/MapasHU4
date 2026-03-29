@@ -11,7 +11,17 @@ export default function NotificationsPage() {
   const updated = notifications.filter((n) => n.id !== id);
    setNotifications(updated);
   };
-useEffect(() => {
+  const markAllAsRead = () => {
+    setNotifications((prev) =>
+      prev.map((n) =>
+        n.status === "no leida" 
+          ? { ...n, status: "leida" }
+          : n
+      )
+    );
+  };
+  
+  useEffect(() => {
   const handleEsc = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
       router.back();
@@ -29,6 +39,12 @@ useEffect(() => {
     <section className="mx-auto max-w-3xl">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Todas las notificaciones</h1>
+        <button
+          onClick={markAllAsRead}
+          className="mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        >
+          Marcar todas como leídas
+        </button>
         <p className="mt-1 text-sm text-gray-500">Notificaciones del usuario.</p>
       </div>
 
