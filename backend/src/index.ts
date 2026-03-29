@@ -1,8 +1,14 @@
 import express from 'express'
+import cors from 'cors';
+import { FiltersHomepageController } from './modules/filtershomepage/filtershomepage.controller.js';
 
 const app = express()
-
+app.use(cors());
 app.use(express.json())
+
+
+const filtersController = new FiltersHomepageController();
+app.get('/api/filters', filtersController.getFilters);
 
 // ✅ ENDPOINT
 app.post('/api/users', (req, res) => {
