@@ -23,6 +23,15 @@ export function ComboBox({ label, placeholder, options = [], icon: Icon }: Combo
     setSelectedValue(option);
     setIsOpen(false);
   };
+  
+  const selectedOptionData = options.find((option) => {
+    if (typeof option === 'string') return option === selectedValue;
+    return option.label === selectedValue;
+  });
+  const SelectedIcon =
+    selectedOptionData && typeof selectedOptionData !== 'string'
+      ? selectedOptionData.icon
+      : Icon;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -44,9 +53,9 @@ export function ComboBox({ label, placeholder, options = [], icon: Icon }: Combo
       </label>
       
       <div className="relative group">
-        {Icon && (
+        {SelectedIcon && (
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none z-10">
-            <Icon className={`w-5 h-5 transition-colors ${isOpen ? 'text-amber-600' : 'text-stone-400'}`} />
+            <SelectedIcon className={`w-5 h-5 transition-colors ${isOpen ? 'text-amber-600' : 'text-stone-400'}`} />
           </div>
         )}
 
@@ -54,7 +63,7 @@ export function ComboBox({ label, placeholder, options = [], icon: Icon }: Combo
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={`w-full flex items-center justify-between appearance-none bg-white border text-stone-600 py-2.5 pr-3 rounded-xl focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 cursor-pointer transition-all shadow-sm hover:border-stone-300 ${
-            Icon ? 'pl-10' : 'pl-4'
+            SelectedIcon ? 'pl-10' : 'pl-4'
           } ${isOpen ? 'border-amber-600 ring-1 ring-amber-600' : 'border-stone-200'}`}
         >
           <span className={selectedValue ? 'text-stone-900' : 'text-stone-500'}>
