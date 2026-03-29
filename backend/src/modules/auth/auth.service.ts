@@ -1,5 +1,12 @@
 import { generateToken, type JwtPayload } from '../../utils/jwt.js'
-import { createUser, findUser, findUserByCorreo } from './auth.repository.js'
+import {
+  createSession,
+  createUser,
+  desactiveSessionByToken,
+  findActiveSessionByToken,
+  findUser,
+  findUserByCorreo
+} from './auth.repository.js'
 
 type LoginDTO = {
   email: string
@@ -40,6 +47,14 @@ export const loginService = async (payload: LoginDTO) => {
   }
 
   const token = generateToken(jwtPayload)
+
+  const fechaExpiracion = new Date(Date.now() + 60 * 60 * 1000)
+
+  await createSession({
+    token,
+    usuarioId: user.id,
+    fechaExpiracion
+  })
 
   return {
     user: {
@@ -83,5 +98,37 @@ export const registerUser = async (payload: RegisterDTO) => {
     apellido: newUser.apellido,
     correo: newUser.correo,
     telefonos: newUser.telefonos
+  }
+}
+
+export const getMeService = async (token: string) => {
+  const session = await findActiveSessionByToken(token)
+
+  if (!session) {
+    throw new Error('Sesión inválida o expirada')
+  }
+
+  return {
+    user: {
+      id: session.usuario.id,
+      nombre: session.usuario.nombre,
+      apellido: session.usuario.apellido,
+      correo: session.usuario.correo,
+      rol: session.usuario.rol
+    }
+  }
+}
+
+export const logoutService = async (token: string) => {
+  const session = await findActiveSessionByToken(token)
+
+  if (!session) {
+    throw new Error('Sesión inválida o expirada')
+  }
+
+  await desactiveSessionByToken(token)
+
+  return {
+    message: 'Logout exitoso'
   }
 }

@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { verifyAuth } from "../../src/middleware/auth.middleware.js";
 import { getMeService } from "../../src/modules/auth/auth.service.js";
-import { resourceUsage } from "process";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -12,6 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const auth = await verifyAuth(req, res);
   if (!auth) return;
+
   try {
     const result = await getMeService(auth.token);
     return res.status(200).json(result);
