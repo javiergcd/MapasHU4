@@ -5,6 +5,9 @@ export function ordenarInmuebles(inmuebles: Inmueble[], orden: EstadoOrdenamient
     if (orden.fecha === 'mas-recientes') {
       const diff = new Date(b.fechaPublicacion).getTime() - new Date(a.fechaPublicacion).getTime()
       if (diff !== 0) return diff
+    } else if (orden.fecha === 'mas-antiguos') {
+      const diff = new Date(a.fechaPublicacion).getTime() - new Date(b.fechaPublicacion).getTime()
+      if (diff !== 0) return diff
     } else {
       const popA = a.popularidad ?? 0
       const popB = b.popularidad ?? 0
