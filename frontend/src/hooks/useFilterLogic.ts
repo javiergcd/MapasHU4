@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
-// Definimos qué estructura mínima esperamos de los datos
 interface FilterItem {
   name: string;
   count: number;
 }
 
-export const useFilterLogic = <T extends FilterItem>(initialData: T[]) => {
+export const useFilterLogic = <T extends FilterItem>() => {
   const [viewLevel, setViewLevel] = useState(1); 
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | 'none'>('none');
 
-  // Rota entre: none -> asc -> desc -> none
   const toggleSort = () => {
     setSortOrder(prev => {
       if (prev === 'none') return 'asc';
@@ -23,10 +21,15 @@ export const useFilterLogic = <T extends FilterItem>(initialData: T[]) => {
     setViewLevel(prev => prev + 1);
   };
 
+  const handleSeeLess = () => {
+    setViewLevel(1);
+  };
+
   const getVisibleData = (data: T[]) => {
+    if (!data) return [];
     let processed = [...data];
 
-    // Lógica de ordenamiento
+    // Lógica de ordenamiento original
     if (sortOrder === 'asc') {
       processed.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortOrder === 'desc') {
@@ -36,10 +39,10 @@ export const useFilterLogic = <T extends FilterItem>(initialData: T[]) => {
       processed.sort((a, b) => b.count - a.count);
     }
 
-    // Lógica de "Ver más"
-    if (viewLevel === 1) return processed.slice(0, 2); // Muestra 2 iniciales
-    if (viewLevel === 2) return processed.slice(0, 5); // Muestra 5
-    return processed; // Muestra todos
+    // Lógica de niveles (2 -> 5 -> Todos)
+    if (viewLevel === 1) return processed.slice(0, 2);
+    if (viewLevel === 2) return processed.slice(0, 5);
+    return processed;
   };
 
   return {
@@ -47,6 +50,7 @@ export const useFilterLogic = <T extends FilterItem>(initialData: T[]) => {
     sortOrder,
     toggleSort,
     handleSeeMore,
+    handleSeeLess,
     getVisibleData
   };
 };
