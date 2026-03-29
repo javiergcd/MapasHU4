@@ -107,7 +107,7 @@ export function LocationSearch({ value, onChange }: LocationSearchProps) {
               <div className="flex items-center gap-3">
                 <Search className="w-3.5 h-3.5 text-stone-500" />
                 <span className="text-sm font-bold text-stone-500">
-                  {loc.nombre} - {loc.departamento}
+                  {loc.nombre} - {loc.departamento} - Bolivia
                 </span>
               </div>
               <img src="https://flagcdn.com/w20/bo.png" alt="BO" className="w-4 h-3" />
