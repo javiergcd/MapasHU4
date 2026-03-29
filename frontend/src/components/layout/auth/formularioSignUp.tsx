@@ -1,7 +1,17 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { Eye, EyeOff, Mail, User, Phone, Lock } from 'lucide-react'
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  User,
+  Phone,
+  Lock,
+  AlertCircle,
+  CheckCircle,
+  Chrome
+} from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { validateEmail, validatePassword } from '@/lib/validators/auth'
@@ -40,12 +50,12 @@ const initialFormData: FormData = {
 
 function getInputClasses(hasError?: boolean, hasRightIcon?: boolean) {
   return [
-    'w-full rounded-xl border bg-[#ffffff] pl-11 py-3 outline-none',
-    hasRightIcon ? 'pr-12' : 'pr-4',
-    'text-sm text-[#292524] placeholder:text-[#78716c] transition-all duration-200',
+    'w-full rounded-md border bg-white pl-9 py-2.5 outline-none',
+    hasRightIcon ? 'pr-10' : 'pr-3',
+    'text-[12px] text-[#292524] placeholder:text-[#78716c] transition-all duration-200',
     hasError
-      ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100'
-      : 'border-[#e7e5e4] focus:border-[#D97706] focus:ring-2 focus:ring-amber-100'
+      ? 'border-red-400 focus:border-red-400 focus:ring-1 focus:ring-red-200'
+      : 'border-[#d6d3d1] focus:border-[#D97706] focus:ring-1 focus:ring-amber-200'
   ].join(' ')
 }
 
@@ -59,8 +69,12 @@ function FieldError({
   if (!error) return null
 
   return (
-    <p id={id} className="mt-2 text-sm text-red-600">
-      {error}
+    <p
+      id={id}
+      className="mt-1 flex items-center gap-1 text-[11px] text-red-500"
+    >
+      <AlertCircle size={12} />
+      <span>{error}</span>
     </p>
   )
 }
@@ -75,7 +89,7 @@ function FieldLabel({
   return (
     <label
       htmlFor={htmlFor}
-      className="mb-2 block text-sm font-medium text-[#292524]"
+      className="mb-1 block text-[12px] font-medium text-[#292524]"
     >
       {children}
     </label>
@@ -413,30 +427,42 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f5f5f4] px-4 py-10">
-      <div className="w-full max-w-md">
-        <div className="rounded-2xl bg-[#ffffff] px-8 py-10 shadow-sm">
-          <h1 className="mb-8 text-center text-4xl font-bold text-[#292524]">
-            Registro
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f5f4] px-4 py-8">
+      {serverError ? (
+        <div className="fixed bottom-6 right-6 z-50 flex min-w-[280px] items-start gap-3 border-l-4 border-red-400 bg-white px-4 py-3 shadow-lg">
+          <AlertCircle className="mt-0.5 text-red-500" size={18} />
+          <div>
+            <p className="text-sm font-semibold text-[#292524]">Error</p>
+            <p className="text-xs text-[#57534e]">{serverError}</p>
+          </div>
+        </div>
+      ) : null}
+
+      {serverMessage ? (
+        <div className="fixed bottom-6 right-6 z-50 flex min-w-[280px] items-start gap-3 border-l-4 border-emerald-400 bg-white px-4 py-3 shadow-lg">
+          <CheckCircle className="mt-0.5 text-emerald-500" size={18} />
+          <div>
+            <p className="text-sm font-semibold text-[#292524]">Éxito</p>
+            <p className="text-xs text-[#57534e]">{serverMessage}</p>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="w-full max-w-[340px]">
+        <div className="border border-[#e7e5e4] bg-white px-4 py-5 shadow-sm">
+          <h1 className="text-center text-[42px] font-extrabold leading-none text-[#292524]">
+            Registrarse
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {serverMessage ? (
-              <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                {serverMessage}
-              </p>
-            ) : null}
+          <p className="mt-2 mb-4 text-center text-[12px] text-[#57534e]">
+            Crea tu cuenta para comenzar
+          </p>
 
-            {serverError ? (
-              <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {serverError}
-              </p>
-            ) : null}
-
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <FieldLabel htmlFor="email">Correo electrónico</FieldLabel>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="email"
                   name="email"
@@ -444,7 +470,7 @@ export default function SignUpForm() {
                   value={formData.email}
                   onChange={handleChange('email')}
                   onBlur={handleBlur('email')}
-                  placeholder="Ingresa tu correo"
+                  placeholder="Ingresa tu correo electrónico"
                   className={getInputClasses(Boolean(touched.email && errors.email))}
                   aria-invalid={Boolean(touched.email && errors.email)}
                   aria-describedby="email-error"
@@ -459,7 +485,7 @@ export default function SignUpForm() {
             <div>
               <FieldLabel htmlFor="firstName">Nombre</FieldLabel>
               <div className="relative">
-                <User className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="firstName"
                   name="firstName"
@@ -469,7 +495,9 @@ export default function SignUpForm() {
                   onBlur={handleBlur('firstName')}
                   placeholder="Ingresa tu nombre"
                   maxLength={30}
-                  className={getInputClasses(Boolean(touched.firstName && errors.firstName))}
+                  className={getInputClasses(
+                    Boolean(touched.firstName && errors.firstName)
+                  )}
                   aria-invalid={Boolean(touched.firstName && errors.firstName)}
                   aria-describedby="firstName-error"
                 />
@@ -481,9 +509,9 @@ export default function SignUpForm() {
             </div>
 
             <div>
-              <FieldLabel htmlFor="lastName">Apellido</FieldLabel>
+              <FieldLabel htmlFor="lastName">Apellido(s)</FieldLabel>
               <div className="relative">
-                <User className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="lastName"
                   name="lastName"
@@ -493,7 +521,9 @@ export default function SignUpForm() {
                   onBlur={handleBlur('lastName')}
                   placeholder="Ingresa tu apellido"
                   maxLength={30}
-                  className={getInputClasses(Boolean(touched.lastName && errors.lastName))}
+                  className={getInputClasses(
+                    Boolean(touched.lastName && errors.lastName)
+                  )}
                   aria-invalid={Boolean(touched.lastName && errors.lastName)}
                   aria-describedby="lastName-error"
                 />
@@ -505,9 +535,9 @@ export default function SignUpForm() {
             </div>
 
             <div>
-              <FieldLabel htmlFor="phone">Teléfono</FieldLabel>
+              <FieldLabel htmlFor="phone">Numero de telefono</FieldLabel>
               <div className="relative">
-                <Phone className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="phone"
                   name="phone"
@@ -515,7 +545,7 @@ export default function SignUpForm() {
                   value={formData.phone}
                   onChange={handleChange('phone')}
                   onBlur={handleBlur('phone')}
-                  placeholder="Ingresa tu teléfono"
+                  placeholder="Ingresa tu numero de telefono"
                   maxLength={20}
                   className={getInputClasses(Boolean(touched.phone && errors.phone))}
                   aria-invalid={Boolean(touched.phone && errors.phone)}
@@ -531,7 +561,7 @@ export default function SignUpForm() {
             <div>
               <FieldLabel htmlFor="password">Contraseña</FieldLabel>
               <div className="relative">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="password"
                   name="password"
@@ -551,12 +581,12 @@ export default function SignUpForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-[#78716c] transition hover:bg-[#f5f5f4] hover:text-[#292524]"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-[#78716c] hover:bg-[#f5f5f4] hover:text-[#292524]"
                   aria-label={
                     showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
                   }
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
               <FieldError
@@ -570,7 +600,7 @@ export default function SignUpForm() {
                 Confirmar contraseña
               </FieldLabel>
               <div className="relative">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#78716c]" />
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#78716c]" />
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -578,7 +608,7 @@ export default function SignUpForm() {
                   value={formData.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
-                  placeholder="Confirma tu contraseña"
+                  placeholder="Ingresa tu contraseña"
                   maxLength={255}
                   className={getInputClasses(
                     Boolean(touched.confirmPassword && errors.confirmPassword),
@@ -592,7 +622,7 @@ export default function SignUpForm() {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-[#78716c] transition hover:bg-[#f5f5f4] hover:text-[#292524]"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-[#78716c] hover:bg-[#f5f5f4] hover:text-[#292524]"
                   aria-label={
                     showConfirmPassword
                       ? 'Ocultar confirmación de contraseña'
@@ -600,9 +630,9 @@ export default function SignUpForm() {
                   }
                 >
                   {showConfirmPassword ? (
-                    <EyeOff size={18} />
+                    <EyeOff size={15} />
                   ) : (
-                    <Eye size={18} />
+                    <Eye size={15} />
                   )}
                 </button>
               </div>
@@ -614,19 +644,11 @@ export default function SignUpForm() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="rounded-xl border border-[#e7e5e4] bg-[#ffffff] px-4 py-3 text-base font-semibold text-[#292524] transition hover:bg-[#f5f5f4]"
-              >
-                Cancelar registro
-              </button>
-
+            <div className="pt-1">
               <button
                 type="submit"
                 disabled={!isFormValid || isSubmitting}
-                className={`rounded-xl px-4 py-3 text-base font-semibold transition ${
+                className={`w-full rounded-md px-4 py-2.5 text-[13px] font-semibold transition ${
                   isFormValid && !isSubmitting
                     ? 'bg-amber-500 text-white hover:bg-amber-600'
                     : 'cursor-not-allowed bg-[#e7e5e4] text-[#78716c]'
@@ -636,11 +658,27 @@ export default function SignUpForm() {
               </button>
             </div>
 
-            <p className="text-center text-sm text-[#78716c]">
+            <button
+              type="button"
+              className="flex w-full items-center justify-center gap-2 rounded-md border border-[#d6d3d1] bg-white px-4 py-2.5 text-[12px] font-medium text-[#292524] transition hover:bg-[#fafaf9]"
+            >
+              <Chrome size={14} />
+              Regístrate con Google
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="mx-auto block rounded-md bg-[#292524] px-4 py-2 text-[11px] font-semibold text-white transition hover:bg-[#1c1917]"
+            >
+              Cancelar registro
+            </button>
+
+            <p className="pt-1 text-center text-[12px] text-[#78716c]">
               ¿Ya tienes una cuenta?{' '}
               <Link
                 href="/sign-in"
-                className="font-semibold text-[#D97706] transition hover:underline"
+                className="font-medium text-amber-600 transition hover:text-amber-700"
               >
                 Inicia sesión
               </Link>
