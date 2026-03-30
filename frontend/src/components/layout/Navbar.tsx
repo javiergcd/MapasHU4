@@ -82,6 +82,10 @@ export default function Navbar() {
 
   useEffect(() => {
     restoreSession();
+
+    const handleLogin = () => restoreSession();
+    window.addEventListener("propbol:login", handleLogin);
+    return () => window.removeEventListener("propbol:login", handleLogin);
   }, []);
 
   useEffect(() => {

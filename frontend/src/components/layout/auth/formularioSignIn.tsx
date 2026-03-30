@@ -127,6 +127,7 @@ export default function LoginForm() {
 
       setSuccessMessage(data.message || "Inicio de sesión exitoso");
 
+      window.dispatchEvent(new Event("propbol:login"));
       setTimeout(() => {
         router.push("/");
       }, 1000);

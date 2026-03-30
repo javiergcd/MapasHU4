@@ -397,6 +397,7 @@ export default function SignUpForm() {
         data?.message || "Usuario registrado correctamente",
       );
 
+      window.dispatchEvent(new Event("propbol:login"));
       router.replace("/");
     } catch (error) {
       const message =
