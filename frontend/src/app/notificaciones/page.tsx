@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useNotifications } from '@/hooks/useNotifications'
 import type { NotificationFilter } from '@/types/notification'
@@ -9,12 +9,14 @@ const filters: NotificationFilter[] = ['todas', 'no leida', 'leida']
 
 export default function NotificationsPage() {
   const router = useRouter()
+  const loadMoreRef = useRef<HTMLDivElement | null>(null)
 
   const {
     filter,
     setFilter,
     visibleNotifications,
     isLoading,
+    isLoadingMore,
     error,
     hasMore,
     loadMoreNotifications,
@@ -37,6 +39,35 @@ export default function NotificationsPage() {
       window.removeEventListener('keydown', handleEsc)
     }
   }, [router])
+
+  useEffect(() => {
+    const target = loadMoreRef.current
+
+    if (!target || !hasMore) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const firstEntry = entries[0]
+
+        if (firstEntry?.isIntersecting) {
+          void loadMoreNotifications()
+        }
+      },
+      {
+        root: null,
+        rootMargin: '120px',
+        threshold: 0.1
+      }
+    )
+
+    observer.observe(target)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [hasMore, loadMoreNotifications, visibleNotifications.length])
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
@@ -99,61 +130,60 @@ export default function NotificationsPage() {
             No hay notificaciones
           </p>
         ) : (
-          visibleNotifications.map((notification) => (
-            <div
-              key={notification.id}
-              role="listitem"
-              tabIndex={0}
-              aria-label={`Notificación: ${notification.title}`}
-              className={`border-b border-gray-100 px-4 py-4 last:border-b-0 ${
-                notification.status === 'no leida' ? 'bg-blue-50' : 'bg-white'
-              }`}
-            >
-              <div className="flex items-center justify-between gap-3">
-                <h2 className="text-sm font-semibold text-gray-800">
-                  {notification.title?.trim() || '(Sin título)'}
-                </h2>
-                <span className="text-[10px] uppercase text-gray-400">{notification.status}</span>
-              </div>
+          <>
+            {visibleNotifications.map((notification) => (
+              <div
+                key={notification.id}
+                role="listitem"
+                tabIndex={0}
+                aria-label={`Notificación: ${notification.title}`}
+                className={`border-b border-gray-100 px-4 py-4 last:border-b-0 ${
+                  notification.status === 'no leida' ? 'bg-blue-50' : 'bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-sm font-semibold text-gray-800">
+                    {notification.title?.trim() || '(Sin título)'}
+                  </h2>
+                  <span className="text-[10px] uppercase text-gray-400">{notification.status}</span>
+                </div>
 
-              <p className="mt-1 text-sm text-gray-600">
-                {notification.description?.trim() || '(Sin descripción disponible)'}
-              </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  {notification.description?.trim() || '(Sin descripción disponible)'}
+                </p>
 
-              <div className="mt-3 flex items-center justify-between gap-3">
-                {notification.status === 'no leida' ? (
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  {notification.status === 'no leida' ? (
+                    <button
+                      onClick={() => void markAsRead(notification.id)}
+                      className="text-xs text-blue-500 transition hover:text-blue-600 hover:underline"
+                    >
+                      Marcar como leída
+                    </button>
+                  ) : (
+                    <span />
+                  )}
+
                   <button
-                    onClick={() => void markAsRead(notification.id)}
-                    className="text-xs text-blue-500 transition hover:text-blue-600 hover:underline"
+                    onClick={() => void deleteNotification(notification.id)}
+                    className="text-xs text-red-500 transition hover:text-red-600 hover:underline"
                   >
-                    Marcar como leída
+                    Eliminar
                   </button>
-                ) : (
-                  <span />
-                )}
-
-                <button
-                  onClick={() => void deleteNotification(notification.id)}
-                  className="text-xs text-red-500 transition hover:text-red-600 hover:underline"
-                >
-                  Eliminar
-                </button>
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+
+            {hasMore ? <div ref={loadMoreRef} className="h-8 w-full" /> : null}
+
+            {isLoadingMore ? (
+              <p className="px-4 py-4 text-center text-sm text-gray-500">
+                Cargando más notificaciones...
+              </p>
+            ) : null}
+          </>
         )}
       </div>
-
-      {hasMore && !isLoading ? (
-        <div className="mt-4 flex justify-center">
-          <button
-            onClick={loadMoreNotifications}
-            className="rounded border border-gray-300 px-4 py-2 text-sm text-gray-700 transition hover:bg-gray-50"
-          >
-            Cargar más
-          </button>
-        </div>
-      ) : null}
     </section>
   )
 }

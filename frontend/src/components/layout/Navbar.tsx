@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import { Bell, CheckCheck, Loader2, Trash2 } from 'lucide-react'
 import { useNotifications } from '@/hooks/useNotifications'
 import type { NotificationFilter } from '@/types/notification'
@@ -8,12 +9,15 @@ import type { NotificationFilter } from '@/types/notification'
 const filters: NotificationFilter[] = ['todas', 'no leida', 'leida']
 
 export default function Navbar() {
+  const loadMoreRef = useRef<HTMLDivElement | null>(null)
+
   const {
     open,
     filter,
     unreadCount,
     visibleNotifications,
     isLoading,
+    isLoadingMore,
     error,
     notificationRef,
     toggleNotifications,
@@ -25,6 +29,35 @@ export default function Navbar() {
     hasMore,
     refreshNotifications
   } = useNotifications()
+
+  useEffect(() => {
+    const target = loadMoreRef.current
+
+    if (!open || !target || !hasMore) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const firstEntry = entries[0]
+
+        if (firstEntry?.isIntersecting) {
+          void loadMoreNotifications()
+        }
+      },
+      {
+        root: null,
+        rootMargin: '80px',
+        threshold: 0.1
+      }
+    )
+
+    observer.observe(target)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [open, hasMore, loadMoreNotifications, visibleNotifications.length])
 
   return (
     <nav className="border-b border-gray-200 bg-white px-4 py-3 shadow-sm">
@@ -148,15 +181,12 @@ export default function Navbar() {
                       </div>
                     ))}
 
-                    {hasMore ? (
-                      <div className="border-t border-gray-100 p-3">
-                        <button
-                          onClick={loadMoreNotifications}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 transition hover:bg-gray-50"
-                        >
-                          Cargar más
-                        </button>
-                      </div>
+                    {hasMore ? <div ref={loadMoreRef} className="h-6 w-full" /> : null}
+
+                    {isLoadingMore ? (
+                      <p className="border-t border-gray-100 px-4 py-3 text-center text-sm text-gray-500">
+                        Cargando más notificaciones...
+                      </p>
                     ) : null}
                   </>
                 )}

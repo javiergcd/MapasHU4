@@ -28,10 +28,10 @@ const getAuthHeaders = (): HeadersInit => {
   }
 }
 
-const buildNotificationsUrl = (filter: NotificationFilter) => {
+const buildNotificationsUrl = (filter: NotificationFilter, limit: number, offset: number) => {
   const params = new URLSearchParams({
-    limit: '100',
-    offset: '0'
+    limit: String(limit),
+    offset: String(offset)
   })
 
   if (filter !== 'todas') {
@@ -90,10 +90,11 @@ export function useNotifications() {
   const [open, setOpen] = useState(false)
   const [filter, setFilter] = useState<NotificationFilter>('todas')
   const [notifications, setNotifications] = useState<NotificationItem[]>([])
-  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD)
+  const [total, setTotal] = useState(0)
   const [unreadCount, setUnreadCount] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const notificationRef = useRef<HTMLDivElement>(null)
@@ -117,11 +118,12 @@ export function useNotifications() {
 
     try {
       const [notificationsResponse, unreadCountResponse] = await Promise.all([
-        requestJson<NotificationsResponse>(buildNotificationsUrl(nextFilter)),
+        requestJson<NotificationsResponse>(buildNotificationsUrl(nextFilter, ITEMS_PER_LOAD, 0)),
         requestJson<UnreadCountResponse>(`${API_URL}/notificaciones/unread-count`)
       ])
 
       setNotifications(notificationsResponse.items)
+      setTotal(notificationsResponse.total)
       setUnreadCount(unreadCountResponse.unreadCount)
       setIsLoggedIn(true)
     } catch (err) {
@@ -141,6 +143,27 @@ export function useNotifications() {
       setIsLoading(false)
     }
   }, [])
+
+  const loadMoreNotifications = useCallback(async () => {
+    if (isLoading || isLoadingMore || notifications.length >= total) {
+      return
+    }
+
+    setIsLoadingMore(true)
+
+    try {
+      const response = await requestJson<NotificationsResponse>(
+        buildNotificationsUrl(filter, ITEMS_PER_LOAD, notifications.length)
+      )
+
+      setNotifications((prev) => [...prev, ...response.items])
+      setTotal(response.total)
+    } catch {
+      setError('No se pudieron cargar las notificaciones.')
+    } finally {
+      setIsLoadingMore(false)
+    }
+  }, [filter, isLoading, isLoadingMore, notifications.length, total])
 
   const toggleNotifications = () => {
     setOpen((prev) => !prev)
@@ -179,24 +202,9 @@ export function useNotifications() {
     [emitNotificationsUpdated, filter, refreshNotifications]
   )
 
-  const loadMoreNotifications = () => {
-    if (visibleCount < notifications.length) {
-      setVisibleCount((prev) => prev + ITEMS_PER_LOAD)
-    }
-  }
-
-  const filteredNotifications = useMemo(() => {
-    return notifications
-  }, [notifications])
-
-  const visibleNotifications = useMemo(() => {
-    return filteredNotifications.slice(0, visibleCount)
-  }, [filteredNotifications, visibleCount])
-
-  const hasMore = visibleCount < filteredNotifications.length
+  const hasMore = notifications.length < total
 
   useEffect(() => {
-    setVisibleCount(ITEMS_PER_LOAD)
     void refreshNotifications(filter)
   }, [filter, refreshNotifications])
 
@@ -232,6 +240,9 @@ export function useNotifications() {
     }
   }, [])
 
+  const filteredNotifications = useMemo(() => notifications, [notifications])
+  const visibleNotifications = useMemo(() => notifications, [notifications])
+
   return {
     open,
     filter,
@@ -240,6 +251,7 @@ export function useNotifications() {
     visibleNotifications,
     unreadCount,
     isLoading,
+    isLoadingMore,
     error,
     notificationRef,
     toggleNotifications,
