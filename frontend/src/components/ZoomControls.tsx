@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-
-'use client'
-import { useMap } from 'react-leaflet'
-import { useEffect, useState, useCallback } from 'react'
-const MIN_ZOOM = 3
-const MAX_ZOOM = 18
-=======
 "use client";
 
 import { useMap } from "react-leaflet";
@@ -14,7 +6,6 @@ import { useEffect, useState, useCallback } from "react";
 const MIN_ZOOM = 3;
 const MAX_ZOOM = 18;
 
->>>>>>> ae1db79833c60cc5faac5a83fa51bf7fb6f3e09a
 export default function ZoomControls() {
   const map = useMap();
   const [zoom, setZoom] = useState<number>(map.getZoom());
