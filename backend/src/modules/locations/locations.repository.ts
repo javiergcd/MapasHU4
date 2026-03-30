@@ -1,6 +1,15 @@
 import prisma from '../../lib/prisma.js' // Ruta relativa correcta
 
 export class LocationsRepository {
+  // Función auxiliar para generar variaciones con tildes (RegEx simple) --BitPro
+  private normalizeQuery(query: string) {
+    return query
+      .replace(/[aá]/gi, '[aá]')
+      .replace(/[eé]/gi, '[eé]')
+      .replace(/[ií]/gi, '[ií]')
+      .replace(/[oó]/gi, '[oó]')
+      .replace(/[uú]/gi, '[uú]');
+  }
   async findByName(query: string) {
     return await prisma.ubicacion_maestra.findMany({
       where: {
