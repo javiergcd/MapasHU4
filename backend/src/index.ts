@@ -3,6 +3,7 @@ import cors from 'cors'
 import { BannersController } from './modules/banners/banners.controller.js'
 import locationSearchHandler from '../api/locations/search.js'
 import { FiltersHomepageController } from './modules/filtershomepage/filtershomepage.controller.js'  
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const app = express()
 app.use(cors({
@@ -24,8 +25,11 @@ app.post('/api/users', (req, res) => {
 app.get('/api/filters', filtersController.getFilters);
 app.get('/api/banners', (req, res) => bannersController.getBanners(req, res))
 app.get('/api/locations/search', async (req, res) => {
-  await locationSearchHandler(req as any, res as any)
-})
+  await locationSearchHandler(
+    (req as unknown) as VercelRequest, 
+    (res as unknown) as VercelResponse
+  );
+});
 
 const PORT = 5000
 

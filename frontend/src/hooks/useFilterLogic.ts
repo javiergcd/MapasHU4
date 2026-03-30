@@ -14,7 +14,7 @@ export const useFilterLogic = <T extends FilterItem>(data: T[], globalSortOrder:
   // El ordenamiento ahora depende del "globalSortOrder" que viene del padre
   const visibleData = useMemo(() => {
     if (!data) return [];
-    let processed = [...data];
+    const processed = [...data];
 
     if (globalSortOrder === 'asc') {
       processed.sort((a, b) => a.name.localeCompare(b.name));
