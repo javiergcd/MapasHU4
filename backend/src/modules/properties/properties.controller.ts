@@ -18,5 +18,14 @@ export const propertiesController = {
       console.error('Error detallado:', error)
       res.status(500).json({ ok: false, message: 'Error al obtener inmuebles' })
     }
+  },
+  search: async (req: Request, res: Response) => {
+    try {
+      const { search } = req.query;
+      // Aquí iría tu lógica de Prisma para buscar en PROPBOL
+      res.json({ data: [] }); 
+    } catch (error) {
+      res.status(500).json({ error: "Error en la búsqueda" });
+    }
   }
-}
+};
