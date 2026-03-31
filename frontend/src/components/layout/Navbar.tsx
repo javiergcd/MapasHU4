@@ -253,7 +253,7 @@ export default function Navbar() {
                         <div className="mt-3 flex justify-center">
                           <button
                             type="button"
-                            onClick={handleLoginMock}
+                            onClick={handleLoginRedirect}
                             className="rounded-full bg-amber-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-amber-700"
                           >
                             Iniciar sesión
