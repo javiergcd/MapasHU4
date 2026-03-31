@@ -61,6 +61,7 @@ export default function Navbar() {
     setIsPanelOpen(false);
     setShowLogoutModal(false);
     window.dispatchEvent(new Event("propbol:session-changed"));
+    window.dispatchEvent(new Event("auth-state-changed"));
   };
 
   const isSessionExpired = () => {
@@ -82,6 +83,7 @@ export default function Navbar() {
       clearSession();
       return;
     }
+
     try {
       setUser(JSON.parse(savedUser));
     } catch {
@@ -142,6 +144,7 @@ export default function Navbar() {
 
     setIsPanelOpen((prev) => !prev);
   };
+
   const handleLoginRedirect = () => {
     router.push("/sign-in");
   };
@@ -158,6 +161,7 @@ export default function Navbar() {
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(mockUser));
     localStorage.setItem(SESSION_EXPIRES_KEY, String(expiresAt));
     setIsLoggedIn(true);
+    window.dispatchEvent(new Event("auth-state-changed"));
   };
 
   const handleOpenLogoutModal = () => {
