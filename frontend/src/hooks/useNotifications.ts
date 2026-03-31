@@ -101,6 +101,9 @@ export function useNotifications() {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isOnline, setIsOnline] = useState(
+    typeof window !== 'undefined' ? window.navigator.onLine : true
+  )
 
   const notificationRef = useRef<HTMLDivElement>(null)
   const instanceId = useRef(`notifications-${Math.random().toString(36).slice(2)}`)
@@ -250,6 +253,25 @@ export function useNotifications() {
   const hasMore = notifications.length < total
 
   useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true)
+      void refreshNotifications(filter)
+    }
+
+    const handleOffline = () => {
+      setIsOnline(false)
+    }
+
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [filter, refreshNotifications])
+
+  useEffect(() => {
     void refreshNotifications(filter)
   }, [filter, refreshNotifications])
 
@@ -327,6 +349,7 @@ export function useNotifications() {
     isLoading,
     isLoadingMore,
     error,
+    isOnline,
     notificationRef,
     toggleNotifications,
     setFilter,

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Bell, CheckCheck, Loader2, Trash2 } from "lucide-react";
+import { Bell, CheckCheck, Loader2, Trash2, WifiOff } from "lucide-react";
 
 import Logo from "../navbar/Logo";
 import NavLinks from "../navbar/NavLinks";
@@ -40,6 +40,7 @@ export default function Navbar() {
     isLoading,
     isLoadingMore,
     error,
+    isOnline,
     notificationRef,
     toggleNotifications,
     setFilter,
@@ -237,13 +238,21 @@ export default function Navbar() {
                         <button
                           type="button"
                           onClick={() => void markAllAsRead()}
-                          className="inline-flex items-center gap-1 text-xs text-amber-600 transition hover:text-amber-700"
+                          disabled={!isOnline}
+                          className="inline-flex items-center gap-1 text-xs text-amber-600 transition hover:text-amber-700 disabled:cursor-not-allowed disabled:opacity-40"
                         >
                           <CheckCheck className="h-4 w-4" />
                           Marcar todas
                         </button>
                       ) : null}
                     </div>
+
+                    {!isOnline ? (
+                      <div className="flex items-center gap-2 border-b border-stone-100 bg-stone-50 px-4 py-2 text-xs text-stone-500">
+                        <WifiOff className="h-3 w-3 shrink-0" />
+                        <span>Sin conexión. Se actualizará al reconectarte.</span>
+                      </div>
+                    ) : null}
 
                     {!isLoggedIn ? (
                       <div className="px-4 py-6 text-center">
@@ -301,7 +310,7 @@ export default function Navbar() {
                               <Loader2 className="h-4 w-4 animate-spin" />
                               Cargando notificaciones...
                             </div>
-                          ) : error ? (
+                          ) : error && isOnline ? (
                             <div className="px-4 py-6 text-center">
                               <p className="text-sm text-red-500">{error}</p>
                               <button
@@ -353,7 +362,8 @@ export default function Navbar() {
                                           onClick={() =>
                                             void markAsRead(notification.id)
                                           }
-                                          className="text-xs text-amber-600 transition hover:text-amber-700"
+                                          disabled={!isOnline}
+                                          className="text-xs text-amber-600 transition hover:text-amber-700 disabled:cursor-not-allowed disabled:opacity-40"
                                         >
                                           Leer
                                         </button>
@@ -366,7 +376,8 @@ export default function Navbar() {
                                             notification.id,
                                           )
                                         }
-                                        className="text-xs text-red-500 transition hover:text-red-600"
+                                        disabled={!isOnline}
+                                        className="text-xs text-red-500 transition hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
                                         aria-label="Eliminar notificación"
                                       >
                                         <Trash2 className="h-4 w-4" />
