@@ -31,10 +31,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({ title, data, logic, itemL
       >
         {logic.visibleData.map((item: FilterItem) => (
           <div key={item.name} className="flex justify-between items-center gap-3">
-            <span className="text-gray-400 hover:text-gray-600 cursor-pointer text-sm font-medium font-inter transition-all">
+            <span className="text-gray-600 hover:text-gray-800 cursor-pointer text-sm font-medium font-inter transition-all">
               {formatName(item.name)}
             </span>
-            <span className="text-gray-400 text-sm font-medium font-inter">
+            <span className="text-gray-500 text-sm font-medium font-inter">
               {item.count.toLocaleString()} {itemLabel}
             </span>
           </div>
