@@ -73,7 +73,6 @@ export default function NotificationsPage() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
-      {/* Banner sin conexión */}
       {!isOnline && (
         <div className="mb-4 flex items-center gap-2 rounded-lg bg-stone-100 px-4 py-3 text-sm text-stone-600">
           <WifiOff className="h-4 w-4 shrink-0 text-stone-400" />
@@ -81,7 +80,6 @@ export default function NotificationsPage() {
         </div>
       )}
 
-      {/* Header */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-stone-900">
@@ -101,7 +99,6 @@ export default function NotificationsPage() {
         </button>
       </div>
 
-      {/* Filters */}
       <div className="mb-4 flex flex-wrap gap-2">
         {filters.map((item) => (
           <button
@@ -118,7 +115,6 @@ export default function NotificationsPage() {
         ))}
       </div>
 
-      {/* List */}
       <div
         role="list"
         aria-label="Lista de notificaciones"

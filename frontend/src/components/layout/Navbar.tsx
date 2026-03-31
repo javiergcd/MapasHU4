@@ -136,7 +136,6 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, [user, router]);
 
-  // Cierre con Esc en el panel de la campanita
   useEffect(() => {
     if (!open) return;
 
