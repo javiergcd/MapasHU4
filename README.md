@@ -102,9 +102,15 @@ Levantar contenedor de desarrollo:
 - Acceder a `http://localhost:3000/`
 - API: `http://localhost:3000/api/calculator`
 
+=======
+
+- Acceder a `http://localhost:3000/`
+- API: `http://localhost:3000/api/calculator`
+
 ---
 
 ## ⚙️ Requisitos
+
 
 - Usa `bun test` para todos los tests; no es necesario configurar Jest manualmente
 - Toda la lógica de API está en `app/api/calculator/route.ts`

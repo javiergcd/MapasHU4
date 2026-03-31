@@ -1,7 +1,17 @@
-// TODO: Implementar rutas de verificación de correo
-import express from 'express'
+import { Router } from 'express';
+import {
+  verificarPassword,
+  solicitarCambioEmail,
+  confirmarCambioEmail
+} from './correoverificacion.controller.js';
 
-const router = express.Router()
+// 🔥 tu nuevo middleware limpio
+import { validarJWT } from '../../middleware/validarJWT.js';
 
-// Routes placeholder
-export default router
+const router = Router();
+
+router.post('/verificar-password', validarJWT, verificarPassword);
+router.post('/solicitar-cambio-email', validarJWT, solicitarCambioEmail);
+router.post('/confirmar-cambio-email', validarJWT, confirmarCambioEmail);
+
+export default router;

@@ -2,27 +2,20 @@ import Image from 'next/image'
 import FilterBar from '../filters/FilterBar'
 
 interface BannerProps {
-  url: string
-  title?: string
-  subtitle?: string
+  url: string;
+  title?: string;
+  subtitle?: string;
 }
 
 export const HomeBanner = ({ url, title, subtitle }: BannerProps) => {
   return (
-    /* h-[220px] -> Altura slim para móvil para ver el buscador rápido */
-    /* md:h-[60vh] -> Altura completa para escritorio */
-    <div className="relative w-full h-[320px] md:h-[75vh] flex flex-col items-center justify-center overflow-visible">
-      
-      <Image 
-        src={url} 
-        alt="Portada principal" 
-        fill 
-        /* AQUÍ EL TRUCO: 
-           En móvil usamos 'object-[80%_center]' para ver a las personas (derecha).
-           En PC usamos 'md:object-center' para que se vea todo equilibrado.
-        */
-        className="object-cover object-[80%_center] md:object-center transition-all duration-500" 
-        priority 
+    <div className="relative w-full h-[60vh] min-h-[300px] bg-slate-100 flex items-center justify-center">
+      <Image
+        src={url}
+        alt="Portada principal"
+        fill
+        className="object-cover"
+        priority
       />
 
       {/* Capa oscura para que el texto blanco siempre se lea bien */}

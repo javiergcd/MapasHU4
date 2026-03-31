@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { usePropertySearch } from '@/hooks/usePropertySearch'
 
-const MapView = dynamic(() => import('./MapView'), { ssr: false })
+const MapView = dynamic(() => import("./MapView"), { ssr: false });
 
 export default function BusquedaMapaPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -60,7 +60,7 @@ export default function BusquedaMapaPage() {
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="absolute left-0 top-4 z-[1000] bg-white border border-gray-300 shadow-md p-2 rounded-r-md hover:bg-gray-50 flex items-center justify-center transition-colors focus:outline-none hidden md:flex"
-            title={isSidebarOpen ? 'Contraer panel' : 'Expandir panel'}
+            title={isSidebarOpen ? "Contraer panel" : "Expandir panel"}
           >
             <svg
               className="w-5 h-5 text-gray-600"
@@ -73,7 +73,7 @@ export default function BusquedaMapaPage() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d={isSidebarOpen ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'}
+                d={isSidebarOpen ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
               />
             </svg>
           </button>
@@ -88,5 +88,5 @@ export default function BusquedaMapaPage() {
         </section>
       </div>
     </div>
-  )
+  );
 }

@@ -1,4 +1,10 @@
-import prisma from '../../lib/prisma.js' // Ruta relativa correcta
+import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 export class LocationsRepository {
   // Función auxiliar para generar variaciones con tildes (RegEx simple) --BitPro
@@ -14,8 +20,8 @@ export class LocationsRepository {
     return await prisma.ubicacion_maestra.findMany({
       where: {
         OR: [
-          { nombre: { contains: query, mode: 'insensitive' } },
-          { municipio: { contains: query, mode: 'insensitive' } },
+          { nombre: { contains: query, mode: "insensitive" } }, //Esta es la zona porsiacaso en la bd esta como nombre
+          { municipio: { contains: query, mode: "insensitive" } },
         ],
       },
       select: {
@@ -24,7 +30,7 @@ export class LocationsRepository {
         municipio: true,
         departamento: true,
       },
-      orderBy: { popularidad: 'desc' },
+      orderBy: { popularidad: "desc" },
       take: 5,
     });
   }

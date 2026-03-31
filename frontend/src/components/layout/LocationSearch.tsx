@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
@@ -7,15 +7,15 @@ import { usePopularidad } from '@/hooks/usePopularidad'
 import { useSearchFilters } from '@/hooks/useSearchFilters'
 
 type Location = {
-  id: string | number
-  nombre: string
-  departamento: string
-}
+  id: string | number;
+  nombre: string;
+  departamento: string;
+};
 
 type LocationSearchProps = {
-  value: string
-  onChange: (value: string) => void
-}
+  value: string;
+  onChange: (value: string) => void;
+};
 
 export function LocationSearch({ value, onChange }: LocationSearchProps) {
   const [suggestions, setSuggestions] = useState<Location[]>([])
@@ -74,38 +74,41 @@ export function LocationSearch({ value, onChange }: LocationSearchProps) {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false)
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const fetchLocations = async () => {
       if (value.trim().length < 2 || isSelected) {
-        setSuggestions([])
-        return
+        setSuggestions([]);
+        return;
       }
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:5000/api/locations/search?q=${encodeURIComponent(value)}`
-        )
+          `http://localhost:5000/api/locations/search?q=${encodeURIComponent(value)}`,
+        );
         if (res.ok) {
-          const data = await res.json()
-          setSuggestions(data)
-          setIsOpen(true)
+          const data = await res.json();
+          setSuggestions(data);
+          setIsOpen(true);
         }
       } catch {
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    const timer = setTimeout(fetchLocations, 300)
-    return () => clearTimeout(timer)
-  }, [value, isSelected])
+    };
+    const timer = setTimeout(fetchLocations, 300);
+    return () => clearTimeout(timer);
+  }, [value, isSelected]);
 
   return (
     <div className="w-full relative" ref={containerRef}>
@@ -116,12 +119,12 @@ export function LocationSearch({ value, onChange }: LocationSearchProps) {
       <div
         className={`h-[46px] rounded-xl border transition-all flex items-center gap-3 px-4 bg-white shadow-sm ${
           isOpen && suggestions.length > 0
-            ? 'border-amber-600 ring-2 ring-amber-100'
-            : 'border-stone-300'
+            ? "border-amber-600 ring-2 ring-amber-100"
+            : "border-stone-300"
         }`}
       >
         <MapPin
-          className={`w-5 h-5 flex-shrink-0 ${value ? 'text-amber-600' : 'text-stone-400'}`}
+          className={`w-5 h-5 flex-shrink-0 ${value ? "text-amber-600" : "text-stone-400"}`}
         />
 
         <div className="relative flex-1 flex items-center h-full">
@@ -152,7 +155,7 @@ export function LocationSearch({ value, onChange }: LocationSearchProps) {
           <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
         ) : (
           value && (
-            <button onClick={() => onChange('')} type="button">
+            <button onClick={() => onChange("")} type="button">
               <X className="w-4 h-4 text-stone-400 hover:text-red-500" />
             </button>
           )
@@ -224,5 +227,5 @@ export function LocationSearch({ value, onChange }: LocationSearchProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

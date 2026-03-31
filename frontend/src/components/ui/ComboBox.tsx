@@ -15,7 +15,13 @@ interface ComboBoxProps {
   onChange?: (value: string) => void;
 }
 
-export function ComboBox({ label, placeholder, options = [], icon: Icon, onChange }: ComboBoxProps) {
+export function ComboBox({
+  label,
+  placeholder,
+  options = [],
+  icon: Icon,
+  onChange,
+}: ComboBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<ComboBoxOption | null>(null);
   const comboBoxRef = useRef<HTMLDivElement>(null);
@@ -57,8 +63,8 @@ export function ComboBox({ label, placeholder, options = [], icon: Icon, onChang
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={`w-full flex items-center justify-between bg-white border text-stone-600 py-2.5 pr-3 rounded-xl transition-all shadow-sm focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 hover:border-stone-300 ${
-            DisplayIcon ? 'pl-10' : 'pl-4'
-          } ${isOpen ? 'border-amber-600 ring-1 ring-amber-600' : 'border-stone-200'}`}
+            DisplayIcon ? "pl-10" : "pl-4"
+          } ${isOpen ? "border-amber-600 ring-1 ring-amber-600" : "border-stone-200"}`}
         >
           <span className={selected ? 'text-stone-900' : 'text-stone-500'}>
             {selected?.label || placeholder}
