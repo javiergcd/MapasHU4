@@ -1,5 +1,5 @@
 import { Prisma, RolNombre } from "@prisma/client";
-import { prisma } from "../../../prisma.config";
+import { prisma } from "../../db";
 
 interface CreateUserInput {
   nombre: string;

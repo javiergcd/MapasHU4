@@ -1,6 +1,6 @@
 // 1. Importamos $Enums (con el signo $) desde el cliente generado
 import { $Enums, Prisma } from "@prisma/client";
-import { prisma } from "../../../prisma.config";
+import { prisma } from "../../db";
 
 export class FiltersHomepageRepository {
   // 2. Usamos $Enums.TipoAccion para el tipado
